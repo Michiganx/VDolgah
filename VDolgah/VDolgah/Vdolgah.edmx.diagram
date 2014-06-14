@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a3b0407fde8740f18caf3562b76536d6" Name="Диаграмма1">
+        <EntityTypeShape EntityType="VdolgahModel.debt" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VdolgahModel.friend" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VdolgahModel.user" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="VdolgahModel.column" ManuallyRouted="false" />
+        <AssociationConnector Association="VdolgahModel.row" ManuallyRouted="false" />
+        <AssociationConnector Association="VdolgahModel.first" ManuallyRouted="false" />
+        <AssociationConnector Association="VdolgahModel.second" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

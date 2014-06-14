@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище VdolgahModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Хранилище VdolgahModelContainer">
+          <EntitySet Name="debt" EntityType="Хранилище VdolgahModel.debt" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="friends" EntityType="Хранилище VdolgahModel.friends" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="users" EntityType="Хранилище VdolgahModel.users" store:Type="Tables" Schema="sql543662" />
+          <AssociationSet Name="column" Association="Хранилище VdolgahModel.column">
+            <End Role="users" EntitySet="users" />
+            <End Role="debt" EntitySet="debt" />
+          </AssociationSet>
+          <AssociationSet Name="first" Association="Хранилище VdolgahModel.first">
+            <End Role="users" EntitySet="users" />
+            <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+          <AssociationSet Name="row" Association="Хранилище VdolgahModel.row">
+            <End Role="users" EntitySet="users" />
+            <End Role="debt" EntitySet="debt" />
+          </AssociationSet>
+          <AssociationSet Name="second" Association="Хранилище VdolgahModel.second">
+            <End Role="users" EntitySet="users" />
+            <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="debt">
+          <Key>
+            <PropertyRef Name="row" />
+            <PropertyRef Name="column" />
+          </Key>
+          <Property Name="row" Type="int" Nullable="false" />
+          <Property Name="column" Type="int" Nullable="false" />
+          <Property Name="value" Type="decimal" />
+        </EntityType>
+        <EntityType Name="friends">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="first" Type="int" Nullable="false" />
+          <Property Name="second" Type="int" Nullable="false" />
+          <Property Name="validated" Type="bool" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="password_hesh" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="salt" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="avatar" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <Association Name="column">
+          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
+          <End Role="debt" Type="Хранилище VdolgahModel.debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debt">
+              <PropertyRef Name="column" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="first">
+          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
+          <End Role="friends" Type="Хранилище VdolgahModel.friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friends">
+              <PropertyRef Name="first" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="row">
+          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
+          <End Role="debt" Type="Хранилище VdolgahModel.debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debt">
+              <PropertyRef Name="row" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="second">
+          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
+          <End Role="friends" Type="Хранилище VdolgahModel.friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friends">
+              <PropertyRef Name="second" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VdolgahModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="VdolgahEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="debts" EntityType="VdolgahModel.debt" />
+          <EntitySet Name="friends" EntityType="VdolgahModel.friend" />
+          <EntitySet Name="users" EntityType="VdolgahModel.user" />
+          <AssociationSet Name="column" Association="VdolgahModel.column">
+            <End Role="users" EntitySet="users" />
+            <End Role="debt" EntitySet="debts" />
+          </AssociationSet>
+          <AssociationSet Name="row" Association="VdolgahModel.row">
+            <End Role="users" EntitySet="users" />
+            <End Role="debt" EntitySet="debts" />
+          </AssociationSet>
+          <AssociationSet Name="first" Association="VdolgahModel.first">
+            <End Role="users" EntitySet="users" />
+            <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+          <AssociationSet Name="second" Association="VdolgahModel.second">
+            <End Role="users" EntitySet="users" />
+            <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="debt">
+          <Key>
+            <PropertyRef Name="row" />
+            <PropertyRef Name="column" />
+          </Key>
+          <Property Name="row" Type="Int32" Nullable="false" />
+          <Property Name="column" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="Decimal" />
+          <NavigationProperty Name="user" Relationship="VdolgahModel.column" FromRole="debt" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="VdolgahModel.row" FromRole="debt" ToRole="users" />
+        </EntityType>
+        <EntityType Name="friend">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="first" Type="Int32" Nullable="false" />
+          <Property Name="second" Type="Int32" Nullable="false" />
+          <Property Name="validated" Type="Boolean" />
+          <NavigationProperty Name="user" Relationship="VdolgahModel.first" FromRole="friends" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="VdolgahModel.second" FromRole="friends" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="password_hesh" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="salt" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="avatar" Type="String" MaxLength="512" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="debts" Relationship="VdolgahModel.column" FromRole="users" ToRole="debt" />
+          <NavigationProperty Name="debts1" Relationship="VdolgahModel.row" FromRole="users" ToRole="debt" />
+          <NavigationProperty Name="friends" Relationship="VdolgahModel.first" FromRole="users" ToRole="friends" />
+          <NavigationProperty Name="friends1" Relationship="VdolgahModel.second" FromRole="users" ToRole="friends" />
+        </EntityType>
+        <Association Name="column">
+          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
+          <End Role="debt" Type="VdolgahModel.debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debt">
+              <PropertyRef Name="column" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="row">
+          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
+          <End Role="debt" Type="VdolgahModel.debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debt">
+              <PropertyRef Name="row" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="first">
+          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
+          <End Role="friends" Type="VdolgahModel.friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friends">
+              <PropertyRef Name="first" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="second">
+          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
+          <End Role="friends" Type="VdolgahModel.friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="friends">
+              <PropertyRef Name="second" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище VdolgahModelContainer" CdmEntityContainer="VdolgahEntities">
+          <EntitySetMapping Name="debts">
+            <EntityTypeMapping TypeName="VdolgahModel.debt">
+              <MappingFragment StoreEntitySet="debt">
+                <ScalarProperty Name="row" ColumnName="row" />
+                <ScalarProperty Name="column" ColumnName="column" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="friends">
+            <EntityTypeMapping TypeName="VdolgahModel.friend">
+              <MappingFragment StoreEntitySet="friends">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first" ColumnName="first" />
+                <ScalarProperty Name="second" ColumnName="second" />
+                <ScalarProperty Name="validated" ColumnName="validated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="VdolgahModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password_hesh" ColumnName="password_hesh" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
