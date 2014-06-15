@@ -1,37 +1,60 @@
-﻿@model VDolgah.Models.RegisterModel
-@{
+﻿@{
     ViewBag.Title = "Регистрация";
 }
+@model VDolgah.user
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Создание новой учетной записи.</h2>
-</hgroup>
-
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
-    <fieldset>
-        <legend>Форма регистрации</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Регистрация" />
-    </fieldset>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    if (ViewBag.Error == true)
+    {
+        <style>
+            input, textarea {
+                border-color : red;
+            }
+            div.er {
+                color :red;
+            }
+        </style>
+    }
+    Html.HiddenFor((x) => x.id);
+    <table>
+    <tr>
+        <td> Email
+        </td>
+        <td>
+        @Html.EditorFor((x) => x.email)
+            </td>
+    </tr>
+    <tr>
+        <td> Имя
+        </td>
+        <td>
+        @Html.EditorFor((x) => x.name)
+            </td>
+    </tr>
+    <tr>
+        <td> Пароль
+        </td>
+        <td>
+        @Html.PasswordFor((x) => x.password_hesh)
+            </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+        <input type="submit"  value="Регистрация"/>
+            </td>
+    </tr>
+    @if (ViewBag.Error == true)
+    {
+        <tr class="er">
+           <td>
+        </td> <td>
+            @Html.Label("Пользователь с таким email уже существует") 
+            </td>
+        </tr>
+    }
+    </table>
 }

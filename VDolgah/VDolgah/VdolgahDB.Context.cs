@@ -13,10 +13,10 @@ namespace VDolgah
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VdolgahEntities : DbContext
+    public partial class DBEntities : DbContext
     {
-        public VdolgahEntities()
-            : base("name=VdolgahEntities")
+        public DBEntities()
+            : base("name=DBEntities")
         {
         }
     

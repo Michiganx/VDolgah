@@ -13,7 +13,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("ваша эмблема здесь", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("Вдолгах", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -24,6 +24,9 @@
                             <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
                             <li>@Html.ActionLink("О программе", "About", "Home")</li>
                             <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                            @if(Request.Cookies["user"].Value != String.Empty){
+                            <li>@Html.ActionLink("Выйти", "Logout", "Account")</li>
+                            }
                         </ul>
                     </nav>
                 </div>

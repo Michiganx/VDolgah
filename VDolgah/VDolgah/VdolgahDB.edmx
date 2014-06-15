@@ -4,24 +4,24 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище VdolgahModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="Хранилище VdolgahModelContainer">
-          <EntitySet Name="debt" EntityType="Хранилище VdolgahModel.debt" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="friends" EntityType="Хранилище VdolgahModel.friends" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="users" EntityType="Хранилище VdolgahModel.users" store:Type="Tables" Schema="sql543662" />
-          <AssociationSet Name="column" Association="Хранилище VdolgahModel.column">
+      <Schema Namespace="Хранилище DBModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Хранилище DBModelContainer">
+          <EntitySet Name="debt" EntityType="Хранилище DBModel.debt" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="friends" EntityType="Хранилище DBModel.friends" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="users" EntityType="Хранилище DBModel.users" store:Type="Tables" Schema="sql543662" />
+          <AssociationSet Name="column" Association="Хранилище DBModel.column">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debt" />
           </AssociationSet>
-          <AssociationSet Name="first" Association="Хранилище VdolgahModel.first">
+          <AssociationSet Name="first" Association="Хранилище DBModel.first">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
-          <AssociationSet Name="row" Association="Хранилище VdolgahModel.row">
+          <AssociationSet Name="row" Association="Хранилище DBModel.row">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debt" />
           </AssociationSet>
-          <AssociationSet Name="second" Association="Хранилище VdolgahModel.second">
+          <AssociationSet Name="second" Association="Хранилище DBModel.second">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
@@ -51,13 +51,14 @@
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="varchar" Nullable="false" MaxLength="128" />
           <Property Name="name" Type="varchar" Nullable="false" MaxLength="256" />
-          <Property Name="password_hesh" Type="varchar" Nullable="false" MaxLength="256" />
-          <Property Name="salt" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="password_hesh" Type="char" Nullable="false" MaxLength="32" />
+          <Property Name="salt" Type="char" Nullable="false" MaxLength="10" />
           <Property Name="avatar" Type="varchar" MaxLength="512" />
+          <Property Name="last_ip" Type="char" MaxLength="15" />
         </EntityType>
         <Association Name="column">
-          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
-          <End Role="debt" Type="Хранилище VdolgahModel.debt" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
+          <End Role="debt" Type="Хранилище DBModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -68,8 +69,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="first">
-          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
-          <End Role="friends" Type="Хранилище VdolgahModel.friends" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
+          <End Role="friends" Type="Хранилище DBModel.friends" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -80,8 +81,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="row">
-          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
-          <End Role="debt" Type="Хранилище VdolgahModel.debt" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
+          <End Role="debt" Type="Хранилище DBModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -92,8 +93,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="second">
-          <End Role="users" Type="Хранилище VdolgahModel.users" Multiplicity="1" />
-          <End Role="friends" Type="Хранилище VdolgahModel.friends" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
+          <End Role="friends" Type="Хранилище DBModel.friends" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -107,24 +108,24 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="VdolgahModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="VdolgahEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="debts" EntityType="VdolgahModel.debt" />
-          <EntitySet Name="friends" EntityType="VdolgahModel.friend" />
-          <EntitySet Name="users" EntityType="VdolgahModel.user" />
-          <AssociationSet Name="column" Association="VdolgahModel.column">
+      <Schema Namespace="DBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="debts" EntityType="DBModel.debt" />
+          <EntitySet Name="friends" EntityType="DBModel.friend" />
+          <EntitySet Name="users" EntityType="DBModel.user" />
+          <AssociationSet Name="column" Association="DBModel.column">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debts" />
           </AssociationSet>
-          <AssociationSet Name="row" Association="VdolgahModel.row">
+          <AssociationSet Name="row" Association="DBModel.row">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debts" />
           </AssociationSet>
-          <AssociationSet Name="first" Association="VdolgahModel.first">
+          <AssociationSet Name="first" Association="DBModel.first">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
-          <AssociationSet Name="second" Association="VdolgahModel.second">
+          <AssociationSet Name="second" Association="DBModel.second">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
@@ -137,8 +138,8 @@
           <Property Name="row" Type="Int32" Nullable="false" />
           <Property Name="column" Type="Int32" Nullable="false" />
           <Property Name="value" Type="Decimal" />
-          <NavigationProperty Name="user" Relationship="VdolgahModel.column" FromRole="debt" ToRole="users" />
-          <NavigationProperty Name="user1" Relationship="VdolgahModel.row" FromRole="debt" ToRole="users" />
+          <NavigationProperty Name="user" Relationship="DBModel.column" FromRole="debt" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="DBModel.row" FromRole="debt" ToRole="users" />
         </EntityType>
         <EntityType Name="friend">
           <Key>
@@ -148,8 +149,8 @@
           <Property Name="first" Type="Int32" Nullable="false" />
           <Property Name="second" Type="Int32" Nullable="false" />
           <Property Name="validated" Type="Boolean" />
-          <NavigationProperty Name="user" Relationship="VdolgahModel.first" FromRole="friends" ToRole="users" />
-          <NavigationProperty Name="user1" Relationship="VdolgahModel.second" FromRole="friends" ToRole="users" />
+          <NavigationProperty Name="user" Relationship="DBModel.first" FromRole="friends" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="DBModel.second" FromRole="friends" ToRole="users" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -158,17 +159,18 @@
           <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
-          <Property Name="password_hesh" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
-          <Property Name="salt" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="password_hesh" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="salt" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="avatar" Type="String" MaxLength="512" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="debts" Relationship="VdolgahModel.column" FromRole="users" ToRole="debt" />
-          <NavigationProperty Name="debts1" Relationship="VdolgahModel.row" FromRole="users" ToRole="debt" />
-          <NavigationProperty Name="friends" Relationship="VdolgahModel.first" FromRole="users" ToRole="friends" />
-          <NavigationProperty Name="friends1" Relationship="VdolgahModel.second" FromRole="users" ToRole="friends" />
+          <Property Name="last_ip" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="debts" Relationship="DBModel.column" FromRole="users" ToRole="debt" />
+          <NavigationProperty Name="debts1" Relationship="DBModel.row" FromRole="users" ToRole="debt" />
+          <NavigationProperty Name="friends" Relationship="DBModel.first" FromRole="users" ToRole="friends" />
+          <NavigationProperty Name="friends1" Relationship="DBModel.second" FromRole="users" ToRole="friends" />
         </EntityType>
         <Association Name="column">
-          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
-          <End Role="debt" Type="VdolgahModel.debt" Multiplicity="*" />
+          <End Role="users" Type="DBModel.user" Multiplicity="1" />
+          <End Role="debt" Type="DBModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -179,8 +181,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="row">
-          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
-          <End Role="debt" Type="VdolgahModel.debt" Multiplicity="*" />
+          <End Role="users" Type="DBModel.user" Multiplicity="1" />
+          <End Role="debt" Type="DBModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -191,8 +193,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="first">
-          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
-          <End Role="friends" Type="VdolgahModel.friend" Multiplicity="*" />
+          <End Role="users" Type="DBModel.user" Multiplicity="1" />
+          <End Role="friends" Type="DBModel.friend" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -203,8 +205,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="second">
-          <End Role="users" Type="VdolgahModel.user" Multiplicity="1" />
-          <End Role="friends" Type="VdolgahModel.friend" Multiplicity="*" />
+          <End Role="users" Type="DBModel.user" Multiplicity="1" />
+          <End Role="friends" Type="DBModel.friend" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -219,9 +221,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище VdolgahModelContainer" CdmEntityContainer="VdolgahEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DBEntities">
           <EntitySetMapping Name="debts">
-            <EntityTypeMapping TypeName="VdolgahModel.debt">
+            <EntityTypeMapping TypeName="DBModel.debt">
               <MappingFragment StoreEntitySet="debt">
                 <ScalarProperty Name="row" ColumnName="row" />
                 <ScalarProperty Name="column" ColumnName="column" />
@@ -230,7 +232,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="friends">
-            <EntityTypeMapping TypeName="VdolgahModel.friend">
+            <EntityTypeMapping TypeName="DBModel.friend">
               <MappingFragment StoreEntitySet="friends">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="first" ColumnName="first" />
@@ -240,7 +242,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="VdolgahModel.user">
+            <EntityTypeMapping TypeName="DBModel.user">
               <MappingFragment StoreEntitySet="users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -248,6 +250,7 @@
                 <ScalarProperty Name="password_hesh" ColumnName="password_hesh" />
                 <ScalarProperty Name="salt" ColumnName="salt" />
                 <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="last_ip" ColumnName="last_ip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

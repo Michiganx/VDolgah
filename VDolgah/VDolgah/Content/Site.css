@@ -431,7 +431,7 @@ input, textarea {
     font-size: 1.2em;
     margin: 5px 0 6px 0;
     padding: 5px;
-    width: 300px;
+    width: auto;
 }
 
 textarea {
@@ -582,8 +582,8 @@ td {
     border: 0 none;
 }
 
-tr.pager td {
-    padding: 0 0.25em 0 0;
+tr.pager, td {
+    padding:inherit 4px 4px 4px 4px;
 }
 
 
