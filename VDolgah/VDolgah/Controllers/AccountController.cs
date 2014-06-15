@@ -18,14 +18,20 @@ namespace VDolgah.Controllers
         [HttpPost]
         public ActionResult Register(user u)
         {
-            AccountChecker ac = new AccountChecker(u.email, u.password_hesh);
-            if (!(ViewBag.Error = ac.CheckEmail()))
+            if (u.email == null || u.name == null || u.password_hesh == null || u.confirm_password == null)
+            {
+                ViewBag.Error = "Не все поля заполнены";
+                return View();
+            }
+            AccountChecker ac = new AccountChecker(u.email, u.password_hesh, u.confirm_password);
+            if ((ViewBag.Error = ac.CheckEmail()) == null)
             {
                 u.salt = ac.GenerateSalt();
                 u.password_hesh = ac.CreateMD5Hash();
                 u.last_ip = ac.getLastIP();
                 db.users.Add(u);
                 db.SaveChanges();
+                return RedirectToAction("Thanks");
             }
             return View();
         }
@@ -39,6 +45,11 @@ namespace VDolgah.Controllers
         {
             Response.Cookies["user"].Value = null;
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Thanks()
+        {
+            return View();
         }
     }
 }
