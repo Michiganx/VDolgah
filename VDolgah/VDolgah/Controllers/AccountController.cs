@@ -5,7 +5,7 @@ namespace VDolgah.Controllers
 {
     public class AccountController : Controller
     {
-        DBEntities db = new DBEntities();
+        DBEntities db = DBEntities.Instance;
         //
         // GET: /Account/
 
@@ -24,7 +24,7 @@ namespace VDolgah.Controllers
                 return View();
             }
             AccountChecker ac = new AccountChecker(u.email, u.password_hesh, u.confirm_password);
-            if ((ViewBag.Error = ac.CheckEmail()) == null)
+            if ((ViewBag.Error = ac.CheckEmail(false)) == null)
             {
                 u.salt = ac.GenerateSalt();
                 u.password_hesh = ac.CreateMD5Hash();
