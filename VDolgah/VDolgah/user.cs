@@ -29,6 +29,7 @@ namespace VDolgah
         public string salt { get; set; }
         public string avatar { get; set; }
         public string last_ip { get; set; }
+        public string confirm_password { get; set; }
     
         public virtual ICollection<debt> debts { get; set; }
         public virtual ICollection<debt> debts1 { get; set; }

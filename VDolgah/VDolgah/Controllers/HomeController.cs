@@ -20,10 +20,12 @@ namespace VDolgah.Controllers
         {
             if (user.email != null && user.password_hesh != null && !user.email.Equals(String.Empty) && !user.password_hesh.Equals(String.Empty))
             {
-                AccountChecker checker = new AccountChecker(user.email, user.password_hesh);
+                AccountChecker checker = new AccountChecker(user.email, user.password_hesh,user.confirm_password);
                 if ((ViewBag.ErrorMessage = checker.CheckData()) == null)
                 {
                     user = checker.GetUser();
+                    user.last_ip = checker.getLastIP();
+                    checker.db.SaveChanges();
                     Response.Cookies["user"].Value = user.name;
                     return RedirectToAction("Login", "Account");
                 }

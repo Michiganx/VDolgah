@@ -11,22 +11,28 @@ namespace VDolgah.Models
 {
     public class AccountChecker
     {
-        DBEntities db = new DBEntities();
+        public DBEntities db = new DBEntities();
         string email;
         string password;
+        string confirm;
         string salt;
         Random rand = new Random(DateTime.Now.Millisecond);
 
-        public AccountChecker(string email, string password)
+        public AccountChecker(string email, string password, string confirm)
         {
+            this.confirm = confirm;
             this.email = email;
             this.password = password;
         }
 
         //проверка на сущ. пользователя
-        public bool CheckEmail()
+        public string CheckEmail()
         {
-            return db.users.Where((x) => x.email == this.email).ToList().Count != 0;
+            if (db.users.Where((x) => x.email == this.email).ToList().Count != 0)
+                return "Пользователь с таким email уже существует";
+            if (password != confirm)
+                return "Пароли не совпадают";
+            return null;
         }
 
         public user GetUser()
@@ -37,7 +43,7 @@ namespace VDolgah.Models
         //проверка при входе
         public string CheckData()
         {
-            if (CheckEmail())
+            if (CheckEmail() == null)
             {
                 salt = db.users.Where((x) => x.email == this.email).ToList().First().salt;
                 password = CreateMD5Hash();

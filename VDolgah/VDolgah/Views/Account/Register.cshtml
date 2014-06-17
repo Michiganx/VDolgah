@@ -6,13 +6,13 @@
 <h2>@ViewBag.Title</h2>
 @using (Html.BeginForm())
 {
-    if (ViewBag.Error == true)
+    if (ViewBag.Error != null)
     {
         <style>
             input, textarea {
                 border-color : red;
             }
-            div.er {
+            tr.er {
                 color :red;
             }
         </style>
@@ -41,18 +41,25 @@
             </td>
     </tr>
     <tr>
+        <td> Подтвердите пароль
+        </td>
+        <td>
+        @Html.PasswordFor((x) => x.confirm_password)
+            </td>
+    </tr>
+    <tr>
         <td>
         </td>
         <td>
         <input type="submit"  value="Регистрация"/>
             </td>
     </tr>
-    @if (ViewBag.Error == true)
+    @if (ViewBag.Error != null)
     {
         <tr class="er">
            <td>
         </td> <td>
-            @Html.Label("Пользователь с таким email уже существует") 
+            @Html.Label((string)ViewBag.Error) 
             </td>
         </tr>
     }
