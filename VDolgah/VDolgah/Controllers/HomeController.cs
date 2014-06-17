@@ -26,7 +26,7 @@ namespace VDolgah.Controllers
                     user = checker.GetUser();
                     user.last_ip = checker.getLastIP();
                     checker.db.SaveChanges();
-                    Response.Cookies["user"].Value = user.name;
+                    Response.Cookies["user"].Value = Server.UrlEncode(user.name);
                     return RedirectToAction("Login", "Account");
                 }
             }

@@ -15,7 +15,8 @@ namespace VDolgah
     
     public partial class DBEntities : DbContext
     {
-        public DBEntities()
+        static DBEntities instance = null;
+        private DBEntities()
             : base("name=DBEntities")
         {
         }
@@ -23,6 +24,16 @@ namespace VDolgah
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
+        }
+
+        public static DBEntities Instance
+        {
+            get 
+            {
+                if (instance == null) 
+                    instance = new DBEntities();
+                return instance;
+            }
         }
     
         public DbSet<debt> debts { get; set; }

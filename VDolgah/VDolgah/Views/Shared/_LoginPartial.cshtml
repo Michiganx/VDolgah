@@ -2,6 +2,6 @@
     string res;
     if (Request.Cookies["user"] != null && (res = Request.Cookies["user"].Value) != String.Empty)
     {
-    <h1>Привет, @res</h1> 
+    <h1>Привет, @Server.UrlDecode(res)</h1> 
     }
 }
