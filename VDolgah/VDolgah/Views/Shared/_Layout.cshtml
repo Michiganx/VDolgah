@@ -24,7 +24,7 @@
                             <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
                             <li>@Html.ActionLink("О программе", "About", "Home")</li>
                             <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
-                            @if (Request.Cookies["user"] != null && Request.Cookies["user"].Value != String.Empty)
+                            @if (Session["user"] != null)
                             {
                             <li>@Html.ActionLink("Выйти", "Logout", "Account")</li>
                             }

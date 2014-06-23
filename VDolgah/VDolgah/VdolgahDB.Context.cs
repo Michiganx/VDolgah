@@ -13,31 +13,32 @@ namespace VDolgah
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBEntities : DbContext
+    public partial class DbEntities : DbContext
     {
-        static DBEntities instance = null;
-        private DBEntities()
-            : base("name=DBEntities")
+        private DbEntities()
+            : base("name=DbEntities")
         {
         }
-    
+
+        private static DbEntities instance = null;
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
 
-        public static DBEntities Instance
+        public static DbEntities Instance
         {
             get 
             {
-                if (instance == null) 
-                    instance = new DBEntities();
+                if (instance == null)
+                    instance = new DbEntities();
                 return instance;
             }
         }
-    
         public DbSet<debt> debts { get; set; }
+        public DbSet<debt_log> debt_log { get; set; }
         public DbSet<friend> friends { get; set; }
+        public DbSet<group> groups { get; set; }
         public DbSet<user> users { get; set; }
     }
 }

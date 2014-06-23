@@ -11,43 +11,51 @@ namespace VDolgah.Models
 {
     public class AccountChecker
     {
-        public DBEntities db = DBEntities.Instance;
-        string email;
-        string password;
-        string confirm;
-        string salt;
+        public DbEntities db = DbEntities.Instance;
+        user u;
         Random rand = new Random(DateTime.Now.Millisecond);
 
-        public AccountChecker(string email, string password, string confirm)
+        public AccountChecker(user u)
         {
-            this.confirm = confirm;
-            this.email = email;
-            this.password = password;
+            this.u = u;
         }
 
         //проверка на сущ. пользователя
         public string CheckEmail(bool login)
         {
-            if (db.users.Where((x) => x.email == this.email).ToList().Count != 0 && !login)
+            if (db.users.Where((x) => x.email == u.email).ToList().Count != 0 && !login)
                 return "Пользователь с таким email уже существует";
-            if (password != confirm && !login)
+            if (u.password_hash != u.confirm_password && !login)
                 return "Пароли не совпадают";
             return null;
         }
 
-        public user GetUser()
+        public bool CheckLogin()
         {
-            return db.users.Where((x) => x.email == this.email).ToList().First();
+            return db.users.Where((x) => x.login == u.login).ToList().Count != 0;
         }
 
         //проверка при входе
-        public string CheckData()
+        public string CheckData(bool login)
         {
+            if (!login)
+            {
+                u.login = u.email;
+                if(!CheckLogin())
+                    return "Пользователь не существует";
+                u.salt = db.users.Where((x) => x.login == u.login).ToList().First().salt;
+                u.password_hash = CreateMD5Hash();
+                if (u.password_hash != db.users.Where((x) => x.login == u.login).ToList().First().password_hash)
+                    return "Неправильный логин или пароль";
+                else
+                    return null;
+            }
+            else
             if (CheckEmail(true) == null)
             {
-                salt = db.users.Where((x) => x.email == this.email).ToList().First().salt;
-                password = CreateMD5Hash();
-                if (password != db.users.Where((x) => x.email == this.email).ToList().First().password_hesh)
+                u.salt = db.users.Where((x) => x.email == u.email).ToList().First().salt;
+                u.password_hash = CreateMD5Hash();
+                if (u.password_hash != db.users.Where((x) => x.email == u.email).ToList().First().password_hash)
                     return "Неправильный логин или пароль";
                 else
                     return null;
@@ -56,10 +64,18 @@ namespace VDolgah.Models
                 return "Пользователь не существует";
         }
 
+        public user GetUser()
+        {
+            if (u.login == u.email)
+                return db.users.Where((x) => x.login == u.login).ToList().First();
+            else
+                return db.users.Where((x) => x.email == u.email).ToList().First();
+        }
+
         public string CreateMD5Hash()
         {
             MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(password + salt);
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(u.password_hash + u.salt);
             byte[] hashBytes = md5.ComputeHash(inputBytes);
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
@@ -78,7 +94,7 @@ namespace VDolgah.Models
                 ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * rand.NextDouble() + 65)));
                 builder.Append(ch);
             }
-            salt = builder.ToString();
+            u.salt = builder.ToString();
             return builder.ToString();
         }
 

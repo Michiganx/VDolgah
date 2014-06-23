@@ -27,17 +27,31 @@
             </td>
     </tr>
     <tr>
+        <td> Логин
+        </td>
+        <td>
+        @Html.EditorFor((x) => x.login)
+            </td>
+    </tr>
+    <tr>
         <td> Имя
         </td>
         <td>
-        @Html.EditorFor((x) => x.name)
+        @Html.EditorFor((x) => x.first_name)
+            </td>
+    </tr>
+    <tr>
+        <td> Фамилия
+        </td>
+        <td>
+        @Html.EditorFor((x) => x.last_name)
             </td>
     </tr>
     <tr>
         <td> Пароль
         </td>
         <td>
-        @Html.PasswordFor((x) => x.password_hesh)
+        @Html.PasswordFor((x) => x.password_hash)
             </td>
     </tr>
     <tr>

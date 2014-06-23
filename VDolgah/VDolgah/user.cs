@@ -18,22 +18,29 @@ namespace VDolgah
         {
             this.debts = new HashSet<debt>();
             this.debts1 = new HashSet<debt>();
+            this.debt_log = new HashSet<debt_log>();
             this.friends = new HashSet<friend>();
             this.friends1 = new HashSet<friend>();
+            this.groups = new HashSet<group>();
+            this.debt_log1 = new HashSet<debt_log>();
         }
     
         public int id { get; set; }
         public string email { get; set; }
-        public string name { get; set; }
-        public string password_hesh { get; set; }
+        public string login { get; set; }
+        public string last_name { get; set; }
+        public string first_name { get; set; }
+        public string password_hash { get; set; }
         public string salt { get; set; }
-        public string avatar { get; set; }
-        public string last_ip { get; set; }
         public string confirm_password { get; set; }
+        public byte[] avatar { get; set; }
     
         public virtual ICollection<debt> debts { get; set; }
         public virtual ICollection<debt> debts1 { get; set; }
+        public virtual ICollection<debt_log> debt_log { get; set; }
         public virtual ICollection<friend> friends { get; set; }
         public virtual ICollection<friend> friends1 { get; set; }
+        public virtual ICollection<group> groups { get; set; }
+        public virtual ICollection<debt_log> debt_log1 { get; set; }
     }
 }

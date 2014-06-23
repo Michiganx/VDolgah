@@ -12,13 +12,18 @@ namespace VDolgah
     using System;
     using System.Collections.Generic;
     
-    public partial class debt
+    public partial class group
     {
-        public int row { get; set; }
-        public int column { get; set; }
-        public Nullable<decimal> value { get; set; }
+        public group()
+        {
+            this.debt_log = new HashSet<debt_log>();
+            this.users = new HashSet<user>();
+        }
     
-        public virtual user user { get; set; }
-        public virtual user user1 { get; set; }
+        public int idgroups { get; set; }
+        public string name { get; set; }
+    
+        public virtual ICollection<debt_log> debt_log { get; set; }
+        public virtual ICollection<user> users { get; set; }
     }
 }

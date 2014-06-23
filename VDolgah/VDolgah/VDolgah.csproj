@@ -188,11 +188,17 @@
     <Compile Include="debt.cs">
       <DependentUpon>VdolgahDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="debt_log.cs">
+      <DependentUpon>VdolgahDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="friend.cs">
       <DependentUpon>VdolgahDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="group.cs">
+      <DependentUpon>VdolgahDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -321,6 +327,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Thanks.cshtml" />
     <EntityDeploy Include="VdolgahDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>VdolgahDB.Designer.cs</LastGenOutput>
@@ -338,8 +346,6 @@
       <DependentUpon>VdolgahDB.edmx</DependentUpon>
       <LastGenOutput>VdolgahDB.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Thanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

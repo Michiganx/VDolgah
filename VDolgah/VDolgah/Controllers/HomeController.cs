@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using VDolgah.Models;
@@ -18,15 +19,17 @@ namespace VDolgah.Controllers
         [HttpPost]
         public ActionResult Index(user user)
         {
-            if (user.email != null && user.password_hesh != null && !user.email.Equals(String.Empty) && !user.password_hesh.Equals(String.Empty))
+            if (user.email != null && user.password_hash != null && !user.email.Equals(String.Empty) && !user.password_hash.Equals(String.Empty))
             {
-                AccountChecker checker = new AccountChecker(user.email, user.password_hesh,user.confirm_password);
-                if ((ViewBag.ErrorMessage = checker.CheckData()) == null)
+                Regex reg = new Regex(@"^[-a-zA-Z0-9][-.a-zA-Z0-9]*@[-.a-zA-Z0-9]+(\.[-.a-zA-Z0-9]+)*");
+                AccountChecker checker = new AccountChecker(user);
+                if ((ViewBag.ErrorMessage = checker.CheckData(reg.Match(user.email).Success)) == null)
                 {
                     user = checker.GetUser();
-                    user.last_ip = checker.getLastIP();
                     checker.db.SaveChanges();
-                    Response.Cookies["user"].Value = Server.UrlEncode(user.name);
+                    Session.Clear();
+                    Session["user"] = user;
+                    Session.Timeout = 1;
                     return RedirectToAction("Login", "Account");
                 }
             }

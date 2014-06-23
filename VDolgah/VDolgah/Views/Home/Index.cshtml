@@ -4,7 +4,7 @@
 }
 @model VDolgah.user
 @{
-        if(Request.Cookies["user"] != null && Request.Cookies["user"].Value != String.Empty)
+        if(Session["user"] != null)
         {
             Response.Redirect(Url.Action("Login","Account"));
         }
@@ -25,7 +25,7 @@
     <table>
         <tr class="pager">
             <td>
-                Email
+                Email или логин
             </td>
             <td>
                 @Html.EditorFor((x) => x.email)
@@ -36,7 +36,7 @@
                 Пароль
             </td>
             <td>
-                @Html.PasswordFor((x) => x.password_hesh)
+                @Html.PasswordFor((x) => x.password_hash)
             </td>
         </tr>
         <tr class="pager">

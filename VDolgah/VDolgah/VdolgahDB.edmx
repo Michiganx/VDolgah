@@ -4,24 +4,52 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище DBModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="Хранилище DBModelContainer">
-          <EntitySet Name="debt" EntityType="Хранилище DBModel.debt" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="friends" EntityType="Хранилище DBModel.friends" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="users" EntityType="Хранилище DBModel.users" store:Type="Tables" Schema="sql543662" />
-          <AssociationSet Name="column" Association="Хранилище DBModel.column">
+      <Schema Namespace="Хранилище DbModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Хранилище DbModelContainer">
+          <EntitySet Name="debt" EntityType="Хранилище DbModel.debt" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="debt_log" EntityType="Хранилище DbModel.debt_log" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="friends" EntityType="Хранилище DbModel.friends" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="groups" EntityType="Хранилище DbModel.groups" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="groups_has_users" EntityType="Хранилище DbModel.groups_has_users" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="users" EntityType="Хранилище DbModel.users" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="users_has_debt_log" EntityType="Хранилище DbModel.users_has_debt_log" store:Type="Tables" Schema="sql543662" />
+          <AssociationSet Name="column" Association="Хранилище DbModel.column">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debt" />
           </AssociationSet>
-          <AssociationSet Name="first" Association="Хранилище DBModel.first">
+          <AssociationSet Name="first" Association="Хранилище DbModel.first">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
-          <AssociationSet Name="row" Association="Хранилище DBModel.row">
+          <AssociationSet Name="fk_debt_log_groups1" Association="Хранилище DbModel.fk_debt_log_groups1">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="debt_log" EntitySet="debt_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_debt_log_users1" Association="Хранилище DbModel.fk_debt_log_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="debt_log" EntitySet="debt_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_groups_has_users_groups1" Association="Хранилище DbModel.fk_groups_has_users_groups1">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="groups_has_users" EntitySet="groups_has_users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_groups_has_users_users1" Association="Хранилище DbModel.fk_groups_has_users_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="groups_has_users" EntitySet="groups_has_users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users_has_debt_log_debt_log1" Association="Хранилище DbModel.fk_users_has_debt_log_debt_log1">
+            <End Role="debt_log" EntitySet="debt_log" />
+            <End Role="users_has_debt_log" EntitySet="users_has_debt_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users_has_debt_log_users1" Association="Хранилище DbModel.fk_users_has_debt_log_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="users_has_debt_log" EntitySet="users_has_debt_log" />
+          </AssociationSet>
+          <AssociationSet Name="row" Association="Хранилище DbModel.row">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debt" />
           </AssociationSet>
-          <AssociationSet Name="second" Association="Хранилище DBModel.second">
+          <AssociationSet Name="second" Association="Хранилище DbModel.second">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
@@ -35,6 +63,17 @@
           <Property Name="column" Type="int" Nullable="false" />
           <Property Name="value" Type="decimal" />
         </EntityType>
+        <EntityType Name="debt_log">
+          <Key>
+            <PropertyRef Name="iddebt_log" />
+          </Key>
+          <Property Name="iddebt_log" Type="int" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="groups_idgroups" Type="int" Nullable="false" />
+          <Property Name="payer" Type="int" Nullable="false" />
+          <Property Name="value" Type="decimal" Nullable="false" />
+          <Property Name="comment" Type="text" Nullable="false" />
+        </EntityType>
         <EntityType Name="friends">
           <Key>
             <PropertyRef Name="id" />
@@ -44,21 +83,45 @@
           <Property Name="second" Type="int" Nullable="false" />
           <Property Name="validated" Type="bool" />
         </EntityType>
+        <EntityType Name="groups">
+          <Key>
+            <PropertyRef Name="idgroups" />
+          </Key>
+          <Property Name="idgroups" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="groups_has_users">
+          <Key>
+            <PropertyRef Name="groups_idgroups" />
+            <PropertyRef Name="users_id" />
+          </Key>
+          <Property Name="groups_idgroups" Type="int" Nullable="false" />
+          <Property Name="users_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="varchar" Nullable="false" MaxLength="128" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="256" />
-          <Property Name="password_hesh" Type="char" Nullable="false" MaxLength="32" />
-          <Property Name="salt" Type="char" Nullable="false" MaxLength="10" />
-          <Property Name="avatar" Type="varchar" MaxLength="512" />
-          <Property Name="last_ip" Type="char" MaxLength="15" />
+          <Property Name="login" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="last_name" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="first_name" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="password_hash" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="salt" Type="varchar" Nullable="false" MaxLength="256" />
+          <Property Name="avatar" Type="blob" />
+        </EntityType>
+        <EntityType Name="users_has_debt_log">
+          <Key>
+            <PropertyRef Name="users_id" />
+            <PropertyRef Name="debt_log_iddebt_log" />
+          </Key>
+          <Property Name="users_id" Type="int" Nullable="false" />
+          <Property Name="debt_log_iddebt_log" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="column">
-          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
-          <End Role="debt" Type="Хранилище DBModel.debt" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="debt" Type="Хранилище DbModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -69,8 +132,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="first">
-          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
-          <End Role="friends" Type="Хранилище DBModel.friends" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="friends" Type="Хранилище DbModel.friends" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -80,9 +143,81 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_debt_log_groups1">
+          <End Role="groups" Type="Хранилище DbModel.groups" Multiplicity="1" />
+          <End Role="debt_log" Type="Хранилище DbModel.debt_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="debt_log">
+              <PropertyRef Name="groups_idgroups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_debt_log_users1">
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="debt_log" Type="Хранилище DbModel.debt_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debt_log">
+              <PropertyRef Name="payer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_groups_has_users_groups1">
+          <End Role="groups" Type="Хранилище DbModel.groups" Multiplicity="1" />
+          <End Role="groups_has_users" Type="Хранилище DbModel.groups_has_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="groups_has_users">
+              <PropertyRef Name="groups_idgroups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_groups_has_users_users1">
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="groups_has_users" Type="Хранилище DbModel.groups_has_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="groups_has_users">
+              <PropertyRef Name="users_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users_has_debt_log_debt_log1">
+          <End Role="debt_log" Type="Хранилище DbModel.debt_log" Multiplicity="1" />
+          <End Role="users_has_debt_log" Type="Хранилище DbModel.users_has_debt_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="debt_log">
+              <PropertyRef Name="iddebt_log" />
+            </Principal>
+            <Dependent Role="users_has_debt_log">
+              <PropertyRef Name="debt_log_iddebt_log" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users_has_debt_log_users1">
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="users_has_debt_log" Type="Хранилище DbModel.users_has_debt_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users_has_debt_log">
+              <PropertyRef Name="users_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="row">
-          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
-          <End Role="debt" Type="Хранилище DBModel.debt" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="debt" Type="Хранилище DbModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -93,8 +228,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="second">
-          <End Role="users" Type="Хранилище DBModel.users" Multiplicity="1" />
-          <End Role="friends" Type="Хранилище DBModel.friends" Multiplicity="*" />
+          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
+          <End Role="friends" Type="Хранилище DbModel.friends" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -108,26 +243,44 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="DBEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="debts" EntityType="DBModel.debt" />
-          <EntitySet Name="friends" EntityType="DBModel.friend" />
-          <EntitySet Name="users" EntityType="DBModel.user" />
-          <AssociationSet Name="column" Association="DBModel.column">
+      <Schema Namespace="DbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="debts" EntityType="DbModel.debt" />
+          <EntitySet Name="debt_log" EntityType="DbModel.debt_log" />
+          <EntitySet Name="friends" EntityType="DbModel.friend" />
+          <EntitySet Name="groups" EntityType="DbModel.group" />
+          <EntitySet Name="users" EntityType="DbModel.user" />
+          <AssociationSet Name="column" Association="DbModel.column">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debts" />
           </AssociationSet>
-          <AssociationSet Name="row" Association="DBModel.row">
+          <AssociationSet Name="row" Association="DbModel.row">
             <End Role="users" EntitySet="users" />
             <End Role="debt" EntitySet="debts" />
           </AssociationSet>
-          <AssociationSet Name="first" Association="DBModel.first">
+          <AssociationSet Name="fk_debt_log_groups1" Association="DbModel.fk_debt_log_groups1">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="debt_log" EntitySet="debt_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_debt_log_users1" Association="DbModel.fk_debt_log_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="debt_log" EntitySet="debt_log" />
+          </AssociationSet>
+          <AssociationSet Name="first" Association="DbModel.first">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
-          <AssociationSet Name="second" Association="DBModel.second">
+          <AssociationSet Name="second" Association="DbModel.second">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
+          </AssociationSet>
+          <AssociationSet Name="groups_has_users" Association="DbModel.groups_has_users">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="users_has_debt_log" Association="DbModel.users_has_debt_log">
+            <End Role="debt_log" EntitySet="debt_log" />
+            <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="debt">
@@ -138,8 +291,22 @@
           <Property Name="row" Type="Int32" Nullable="false" />
           <Property Name="column" Type="Int32" Nullable="false" />
           <Property Name="value" Type="Decimal" />
-          <NavigationProperty Name="user" Relationship="DBModel.column" FromRole="debt" ToRole="users" />
-          <NavigationProperty Name="user1" Relationship="DBModel.row" FromRole="debt" ToRole="users" />
+          <NavigationProperty Name="user" Relationship="DbModel.column" FromRole="debt" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="DbModel.row" FromRole="debt" ToRole="users" />
+        </EntityType>
+        <EntityType Name="debt_log">
+          <Key>
+            <PropertyRef Name="iddebt_log" />
+          </Key>
+          <Property Name="iddebt_log" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" />
+          <Property Name="groups_idgroups" Type="Int32" Nullable="false" />
+          <Property Name="payer" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="Decimal" Nullable="false" />
+          <Property Name="comment" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="group" Relationship="DbModel.fk_debt_log_groups1" FromRole="debt_log" ToRole="groups" />
+          <NavigationProperty Name="user" Relationship="DbModel.fk_debt_log_users1" FromRole="debt_log" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="DbModel.users_has_debt_log" FromRole="debt_log" ToRole="users" />
         </EntityType>
         <EntityType Name="friend">
           <Key>
@@ -149,8 +316,17 @@
           <Property Name="first" Type="Int32" Nullable="false" />
           <Property Name="second" Type="Int32" Nullable="false" />
           <Property Name="validated" Type="Boolean" />
-          <NavigationProperty Name="user" Relationship="DBModel.first" FromRole="friends" ToRole="users" />
-          <NavigationProperty Name="user1" Relationship="DBModel.second" FromRole="friends" ToRole="users" />
+          <NavigationProperty Name="user" Relationship="DbModel.first" FromRole="friends" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="DbModel.second" FromRole="friends" ToRole="users" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="idgroups" />
+          </Key>
+          <Property Name="idgroups" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="debt_log" Relationship="DbModel.fk_debt_log_groups1" FromRole="groups" ToRole="debt_log" />
+          <NavigationProperty Name="users" Relationship="DbModel.groups_has_users" FromRole="groups" ToRole="users" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -158,19 +334,23 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
-          <Property Name="password_hesh" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
-          <Property Name="salt" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="avatar" Type="String" MaxLength="512" Unicode="false" FixedLength="false" />
-          <Property Name="last_ip" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="debts" Relationship="DBModel.column" FromRole="users" ToRole="debt" />
-          <NavigationProperty Name="debts1" Relationship="DBModel.row" FromRole="users" ToRole="debt" />
-          <NavigationProperty Name="friends" Relationship="DBModel.first" FromRole="users" ToRole="friends" />
-          <NavigationProperty Name="friends1" Relationship="DBModel.second" FromRole="users" ToRole="friends" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="password_hash" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="salt" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
+          <Property Name="avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="debts" Relationship="DbModel.column" FromRole="users" ToRole="debt" />
+          <NavigationProperty Name="debts1" Relationship="DbModel.row" FromRole="users" ToRole="debt" />
+          <NavigationProperty Name="debt_log" Relationship="DbModel.fk_debt_log_users1" FromRole="users" ToRole="debt_log" />
+          <NavigationProperty Name="friends" Relationship="DbModel.first" FromRole="users" ToRole="friends" />
+          <NavigationProperty Name="friends1" Relationship="DbModel.second" FromRole="users" ToRole="friends" />
+          <NavigationProperty Name="groups" Relationship="DbModel.groups_has_users" FromRole="users" ToRole="groups" />
+          <NavigationProperty Name="debt_log1" Relationship="DbModel.users_has_debt_log" FromRole="users" ToRole="debt_log" />
         </EntityType>
         <Association Name="column">
-          <End Role="users" Type="DBModel.user" Multiplicity="1" />
-          <End Role="debt" Type="DBModel.debt" Multiplicity="*" />
+          <End Role="users" Type="DbModel.user" Multiplicity="1" />
+          <End Role="debt" Type="DbModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -181,8 +361,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="row">
-          <End Role="users" Type="DBModel.user" Multiplicity="1" />
-          <End Role="debt" Type="DBModel.debt" Multiplicity="*" />
+          <End Role="users" Type="DbModel.user" Multiplicity="1" />
+          <End Role="debt" Type="DbModel.debt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -192,9 +372,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_debt_log_groups1">
+          <End Role="groups" Type="DbModel.group" Multiplicity="1" />
+          <End Role="debt_log" Type="DbModel.debt_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="debt_log">
+              <PropertyRef Name="groups_idgroups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_debt_log_users1">
+          <End Role="users" Type="DbModel.user" Multiplicity="1" />
+          <End Role="debt_log" Type="DbModel.debt_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debt_log">
+              <PropertyRef Name="payer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="first">
-          <End Role="users" Type="DBModel.user" Multiplicity="1" />
-          <End Role="friends" Type="DBModel.friend" Multiplicity="*" />
+          <End Role="users" Type="DbModel.user" Multiplicity="1" />
+          <End Role="friends" Type="DbModel.friend" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -205,8 +409,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="second">
-          <End Role="users" Type="DBModel.user" Multiplicity="1" />
-          <End Role="friends" Type="DBModel.friend" Multiplicity="*" />
+          <End Role="users" Type="DbModel.user" Multiplicity="1" />
+          <End Role="friends" Type="DbModel.friend" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -216,14 +420,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="groups_has_users">
+          <End Role="groups" Type="DbModel.group" Multiplicity="*" />
+          <End Role="users" Type="DbModel.user" Multiplicity="*" />
+        </Association>
+        <Association Name="users_has_debt_log">
+          <End Role="debt_log" Type="DbModel.debt_log" Multiplicity="*" />
+          <End Role="users" Type="DbModel.user" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DBEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DbModelContainer" CdmEntityContainer="DbEntities">
           <EntitySetMapping Name="debts">
-            <EntityTypeMapping TypeName="DBModel.debt">
+            <EntityTypeMapping TypeName="DbModel.debt">
               <MappingFragment StoreEntitySet="debt">
                 <ScalarProperty Name="row" ColumnName="row" />
                 <ScalarProperty Name="column" ColumnName="column" />
@@ -231,8 +443,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="debt_log">
+            <EntityTypeMapping TypeName="DbModel.debt_log">
+              <MappingFragment StoreEntitySet="debt_log">
+                <ScalarProperty Name="iddebt_log" ColumnName="iddebt_log" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="groups_idgroups" ColumnName="groups_idgroups" />
+                <ScalarProperty Name="payer" ColumnName="payer" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="friends">
-            <EntityTypeMapping TypeName="DBModel.friend">
+            <EntityTypeMapping TypeName="DbModel.friend">
               <MappingFragment StoreEntitySet="friends">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="first" ColumnName="first" />
@@ -241,19 +465,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="DBModel.user">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="email" ColumnName="email" />
+          <EntitySetMapping Name="groups">
+            <EntityTypeMapping TypeName="DbModel.group">
+              <MappingFragment StoreEntitySet="groups">
+                <ScalarProperty Name="idgroups" ColumnName="idgroups" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="password_hesh" ColumnName="password_hesh" />
-                <ScalarProperty Name="salt" ColumnName="salt" />
-                <ScalarProperty Name="avatar" ColumnName="avatar" />
-                <ScalarProperty Name="last_ip" ColumnName="last_ip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="DbModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="groups_has_users" TypeName="DbModel.groups_has_users" StoreEntitySet="groups_has_users">
+            <EndProperty Name="groups">
+              <ScalarProperty Name="idgroups" ColumnName="groups_idgroups" />
+            </EndProperty>
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="users_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="users_has_debt_log" TypeName="DbModel.users_has_debt_log" StoreEntitySet="users_has_debt_log">
+            <EndProperty Name="debt_log">
+              <ScalarProperty Name="iddebt_log" ColumnName="debt_log_iddebt_log" />
+            </EndProperty>
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="users_id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

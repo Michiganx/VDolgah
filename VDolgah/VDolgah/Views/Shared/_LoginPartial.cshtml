@@ -1,7 +1,7 @@
 ﻿@{
-    string res;
-    if (Request.Cookies["user"] != null && (res = Request.Cookies["user"].Value) != String.Empty)
+    if (Session["user"] != null)
     {
-    <h1>Привет, @Server.UrlDecode(res)</h1> 
+        VDolgah.user u = (Session["user"] as VDolgah.user);
+    <h1>Привет, @Server.UrlDecode(u.first_name + " " + u.last_name)</h1> 
     }
 }

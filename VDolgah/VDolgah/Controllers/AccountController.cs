@@ -5,7 +5,7 @@ namespace VDolgah.Controllers
 {
     public class AccountController : Controller
     {
-        DBEntities db = DBEntities.Instance;
+        DbEntities db = DbEntities.Instance;
         //
         // GET: /Account/
 
@@ -18,17 +18,16 @@ namespace VDolgah.Controllers
         [HttpPost]
         public ActionResult Register(user u)
         {
-            if (u.email == null || u.name == null || u.password_hesh == null || u.confirm_password == null)
+            if (u.email == null || u.first_name == null || u.last_name == null|| u.login == null|| u.password_hash == null || u.confirm_password == null)
             {
                 ViewBag.Error = "Не все поля заполнены";
                 return View();
             }
-            AccountChecker ac = new AccountChecker(u.email, u.password_hesh, u.confirm_password);
+            AccountChecker ac = new AccountChecker(u);
             if ((ViewBag.Error = ac.CheckEmail(false)) == null)
             {
                 u.salt = ac.GenerateSalt();
-                u.password_hesh = ac.CreateMD5Hash();
-                u.last_ip = ac.getLastIP();
+                u.password_hash = ac.CreateMD5Hash();
                 db.users.Add(u);
                 db.SaveChanges();
                 return RedirectToAction("Thanks");
@@ -43,7 +42,7 @@ namespace VDolgah.Controllers
 
         public ActionResult Logout()
         {
-            Response.Cookies["user"].Value = null;
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
