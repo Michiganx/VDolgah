@@ -44,7 +44,7 @@
             </td>
             <td>
                 <input type="submit" value="Логин"/>
-                @Html.ActionLink("Регистрация", "Register")
+                @Html.ActionLink("Регистрация", "Register", null, new { @class = "button" })
             </td>
         </tr>
         @if (ViewBag.ErrorMessage != null)

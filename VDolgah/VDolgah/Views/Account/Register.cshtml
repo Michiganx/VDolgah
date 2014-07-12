@@ -17,6 +17,11 @@
             }
         </style>
     }
+    <style>
+        .login {
+            text-align:left;
+        }
+    </style>
     Html.HiddenFor((x) => x.id);
     <table>
     <tr>
@@ -29,9 +34,10 @@
     <tr>
         <td> Логин
         </td>
+        
         <td>
-        @Html.EditorFor((x) => x.login)
-            </td>
+        @Html.TextBoxFor((x) => x.login, new { @class = "login" })
+        </td>
     </tr>
     <tr>
         <td> Имя

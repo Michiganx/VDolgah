@@ -1,5 +1,9 @@
 ﻿@{
     ViewBag.Title = "Персональный кабинет";
+    if(Session["user"] == null)
+    {
+        Response.Redirect(Url.Action("Index", "Home"));
+    }
 }
 
 <h2>Login</h2>

@@ -11,6 +11,7 @@ namespace VDolgah
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class user
     {
@@ -27,6 +28,7 @@ namespace VDolgah
     
         public int id { get; set; }
         public string email { get; set; }
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Text)]
         public string login { get; set; }
         public string last_name { get; set; }
         public string first_name { get; set; }
