@@ -19,25 +19,24 @@ namespace VDolgah
             : base("name=DbEntities")
         {
         }
-
-        private static DbEntities instance = null;
+        static DbEntities ins;
+        public static DbEntities Instance
+        {
+            get
+            {
+                if (ins == null)
+                    ins = new DbEntities();
+                return ins;
+            }
+        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
-        public static DbEntities Instance
-        {
-            get 
-            {
-                if (instance == null)
-                    instance = new DbEntities();
-                return instance;
-            }
-        }
+    
         public DbSet<debt> debts { get; set; }
         public DbSet<debt_log> debt_log { get; set; }
-        public DbSet<friend> friends { get; set; }
         public DbSet<group> groups { get; set; }
         public DbSet<user> users { get; set; }
     }

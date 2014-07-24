@@ -4,18 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="60cbb5cefccc4349b7feafb0b510bfb2" Name="Диаграмма1">
-        <EntityTypeShape EntityType="DbModel.debt" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DbModel.debt_log" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DbModel.friend" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DbModel.group" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DbModel.user" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+      <Diagram DiagramId="38797f2195b044ffbd7e2de7581de8c9" Name="Диаграмма1">
+        <EntityTypeShape EntityType="DbModel.debt" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.debt_log" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.group" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.user" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="DbModel.column" ManuallyRouted="false" />
         <AssociationConnector Association="DbModel.row" ManuallyRouted="false" />
         <AssociationConnector Association="DbModel.fk_debt_log_groups1" ManuallyRouted="false" />
         <AssociationConnector Association="DbModel.fk_debt_log_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="DbModel.first" ManuallyRouted="false" />
-        <AssociationConnector Association="DbModel.second" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.fk_groups_users1" ManuallyRouted="false" />
         <AssociationConnector Association="DbModel.groups_has_users" ManuallyRouted="false" />
         <AssociationConnector Association="DbModel.users_has_debt_log" ManuallyRouted="false" />
       </Diagram>

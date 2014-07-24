@@ -22,8 +22,10 @@ namespace VDolgah
     
         public int idgroups { get; set; }
         public string name { get; set; }
+        public int creator { get; set; }
     
         public virtual ICollection<debt_log> debt_log { get; set; }
+        public virtual user user { get; set; }
         public virtual ICollection<user> users { get; set; }
     }
 }

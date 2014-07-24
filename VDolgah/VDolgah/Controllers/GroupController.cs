@@ -23,7 +23,10 @@ namespace VDolgah.Controllers
         [HttpPost]
         public ActionResult Create(group gr)
         {
+            gr.creator = (Session["user"] as user).id;
             DbEntities.Instance.groups.Add(gr);
+
+            DbEntities.Instance.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
     }

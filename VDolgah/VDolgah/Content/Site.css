@@ -348,6 +348,10 @@ div.create-group {
     padding: 20px 20px 20px 20px;
 }
 
+div.partial-login {
+    padding-left: 70px;
+    padding-bottom: 30px;
+}
 textarea {
     font-family: inherit;
     width: 500px;
