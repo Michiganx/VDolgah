@@ -344,7 +344,9 @@ input[type="text"],input[type="password"], textarea {
     width: auto;
 }
 
-
+div.create-group {
+    padding: 20px 20px 20px 20px;
+}
 
 textarea {
     font-family: inherit;

@@ -50,5 +50,10 @@ namespace VDolgah.Controllers
         {
             return View();
         }
+
+        public ActionResult ChangeData()
+        {
+            return View();
+        }
     }
 }

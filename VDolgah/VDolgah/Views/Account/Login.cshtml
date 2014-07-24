@@ -1,9 +1,29 @@
-﻿@{
+﻿@model VDolgah.user
+@using VDolgah;
+@{
+    user user = Model as user;
+    bool sessionUser = false;
     ViewBag.Title = "Персональный кабинет";
     if(Session["user"] == null)
     {
         Response.Redirect(Url.Action("Index", "Home"));
     }
+    else if(user == null)
+    {
+        sessionUser = true;
+        user = Session["user"] as user;
+    }
 }
 
-<h2>Login</h2>
+<h2>@user.first_name @user.last_name</h2>
+@if (sessionUser)
+{
+    @Html.ActionLink("ред. данные", "ChangeData", "Account");
+    <div class ="create-group">
+        @Html.ActionLink("Создать группу", "Create", "Group", null, new { @class = "button" })
+    </div>
+}
+else
+{
+    <p>account</p>
+}

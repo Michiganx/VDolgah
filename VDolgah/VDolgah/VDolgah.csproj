@@ -184,6 +184,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="debt.cs">
       <DependentUpon>VdolgahDB.tt</DependentUpon>
@@ -346,6 +347,8 @@
       <DependentUpon>VdolgahDB.edmx</DependentUpon>
       <LastGenOutput>VdolgahDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Account\ChangeData.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
