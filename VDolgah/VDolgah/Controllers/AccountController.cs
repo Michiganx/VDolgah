@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using VDolgah.Models;
 
 namespace VDolgah.Controllers
@@ -37,7 +38,22 @@ namespace VDolgah.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.GroupList = GetGroupList(Session["user"] as user);
             return View();
+        }
+
+        private List<GroupWrapper> GetGroupList(user user)
+        {
+            List<GroupWrapper> list = new List<GroupWrapper>();
+            foreach (group g in user.groups)
+            {
+                GroupWrapper wrapper = new GroupWrapper();
+                wrapper.Group = g;
+                if (g.creator == user.id)
+                    wrapper.creator = true;
+                list.Add(wrapper);
+            }
+            return list;
         }
 
         public ActionResult Logout()

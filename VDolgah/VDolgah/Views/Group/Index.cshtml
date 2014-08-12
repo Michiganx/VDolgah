@@ -1,0 +1,13 @@
+﻿@model VDolgah.group
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (VDolgah.user user in Model.users)
+{
+    <div>
+        @(user.first_name + " " + user.last_name)
+    </div>
+}

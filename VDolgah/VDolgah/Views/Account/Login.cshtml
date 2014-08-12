@@ -22,6 +22,17 @@
     <div class ="create-group">
         @Html.ActionLink("Создать группу", "Create", "Group", null, new { @class = "button" })
     </div>
+    if (ViewBag.GroupList != null)
+    {
+        <div class="group-list">
+            @foreach(VDolgah.Models.GroupWrapper group in ViewBag.GroupList)
+            {
+                <div class="group-elem" onclick="location.href = '@(Url.Action("Index", "Group", new { group_id = group.Group.idgroups }))'">
+                    <p>@group.Group.name</p>
+                </div>
+            }
+        </div>
+    }
 }
 else
 {
