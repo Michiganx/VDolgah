@@ -25,6 +25,8 @@ namespace VDolgah.Models
         {
             if (db.users.Where((x) => x.email == u.email).ToList().Count != 0 && !login)
                 return "Пользователь с таким email уже существует";
+            if (db.users.Where((x) => x.login == u.login).ToList().Count != 0 && !login)
+                return "Пользователь с таким логином уже существует";
             if (u.password_hash != u.confirm_password && !login)
                 return "Пароли не совпадают";
             return null;

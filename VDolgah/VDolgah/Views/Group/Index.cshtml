@@ -3,11 +3,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Группа: @Model.name</h2>
 
+<h3>Учасники</h3>
+<div class="group-user-list">
 @foreach (VDolgah.user user in Model.users)
 {
-    <div>
+    <div class="elem">
         @(user.first_name + " " + user.last_name)
     </div>
 }
+</div>
