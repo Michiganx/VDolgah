@@ -11,7 +11,7 @@ namespace VDolgah.Controllers
     {
         DbEntities db = DbEntities.Instance;
 
-        public ActionResult Index(int group_id)
+        public ActionResult Index(int? group_id)
         {
             group group = db.groups.Where((x) => x.idgroups == group_id).First();
             return View(group);
@@ -32,6 +32,14 @@ namespace VDolgah.Controllers
 
             DbEntities.Instance.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangeName(string newName, int groupId)
+        {
+            var group = db.groups.Where((x) => x.idgroups == groupId).First();
+            group.name = newName;
+            db.SaveChanges();
+            return RedirectToAction("Index", "Group", new { group_id = groupId });
         }
     }
 }

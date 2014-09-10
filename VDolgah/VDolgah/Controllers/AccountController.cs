@@ -11,6 +11,11 @@ namespace VDolgah.Controllers
         //
         // GET: /Account/
 
+
+        // Search
+        //  List<user> users = DbEntities.Instance.users.Where((x) => x.first_name == "Андрей").Union(DbEntities.Instance.users.Where((x) => x.last_name == "Кака")).ToList();
+        //
+
         public ActionResult Register()
         {
             user r = new user();
@@ -46,7 +51,7 @@ namespace VDolgah.Controllers
         private List<GroupWrapper> GetGroupList(user user)
         {
             List<GroupWrapper> list = new List<GroupWrapper>();
-            foreach (group g in user.groups)
+            foreach (group g in user.groups1)
             {
                 GroupWrapper wrapper = new GroupWrapper();
                 wrapper.Group = g;

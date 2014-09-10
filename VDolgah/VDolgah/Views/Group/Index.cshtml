@@ -1,16 +1,34 @@
 ﻿@model VDolgah.group
 @{
     ViewBag.Title = "Index";
+    VDolgah.DbEntities db = VDolgah.DbEntities.Instance;
 }
 
 <h2>Группа: @Model.name</h2>
+
+@using (Html.BeginForm("ChangeName", "Group", FormMethod.Post))
+{
+    <input type="hidden" value="@Model.idgroups" name="groupId" />
+    <input value="Новое имя" name="newName" />
+    <input type="submit" value="Изменить" />
+}
 
 <h3>Учасники</h3>
 <div class="group-user-list">
 @foreach (VDolgah.user user in Model.users)
 {
+    VDolgah.debt debt = null;
+    int value = 0;
+    if((debt = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
+    {
+        value = (int) debt.value;
+    }
+    else 
+    {
+        value = 0;   
+    }
     <div class="elem">
-        @(user.first_name + " " + user.last_name)
+        @(user.first_name + " " + user.last_name + " debt: " +  value.ToString())
     </div>
 }
 </div>
