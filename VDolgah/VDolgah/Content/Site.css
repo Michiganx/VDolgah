@@ -517,6 +517,21 @@ tr.pager, td {
     padding:inherit 4px 4px 4px 4px;
 }
 
+.add-user {
+    width : 40%; 
+}
+
+#search-box {
+    width : 80%;
+}
+
+.add-user#results {
+    width : 23%;
+    position:absolute;
+    display:block;
+    background-color:white;
+    }
+
 
 /********************
 *   Mobile Styles   *

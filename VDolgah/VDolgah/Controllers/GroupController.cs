@@ -41,5 +41,14 @@ namespace VDolgah.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "Group", new { group_id = groupId });
         }
+
+        public ActionResult AddUser(int group_id, int user_id)
+        {
+            var group = db.groups.Where((x) => x.idgroups == group_id).First();
+            var user = db.users.Where((x) => x.id == user_id).First();
+            group.users.Add(user);
+            db.SaveChanges();
+            return RedirectToAction("Index", new { group_id = group_id });
+        }
     }
 }

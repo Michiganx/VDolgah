@@ -53,7 +53,7 @@ namespace VDolgah.Models
                     return null;
             }
             else
-            if (CheckEmail(true) == null)
+                if (CheckEmail(true) == null && db.users.Where((x) => x.email == u.email).Count() > 0)
             {
                 u.salt = db.users.Where((x) => x.email == u.email).ToList().First().salt;
                 u.password_hash = CreateMD5Hash();

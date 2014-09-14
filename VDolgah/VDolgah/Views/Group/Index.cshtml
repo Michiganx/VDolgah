@@ -3,16 +3,26 @@
     ViewBag.Title = "Index";
     VDolgah.DbEntities db = VDolgah.DbEntities.Instance;
 }
-
+<script> var gr_id = @Model.idgroups </script>
+<script src="@Url.Content("/Scripts/jquery-1.8.2.min.js")">  </script>
+<script src="@Url.Content("/Scripts/group_controller.js")">   
+</script>
 <h2>Группа: @Model.name</h2>
-
-@using (Html.BeginForm("ChangeName", "Group", FormMethod.Post))
-{
-    <input type="hidden" value="@Model.idgroups" name="groupId" />
-    <input value="Новое имя" name="newName" />
-    <input type="submit" value="Изменить" />
-}
-
+<a id="triger" onclick="triger()">Изменить имя</a>
+<div id="change_name">
+    @using (Html.BeginForm("ChangeName", "Group", FormMethod.Post))
+    {
+        <input type="hidden" value="@Model.idgroups" name="groupId" />
+        <input value="Новое имя" name="newName" />
+        <input type="submit" value="Изменить" />
+    }
+</div>
+<div class="add-user">
+    <h3> Добавить пользователя</h3>
+    <input type="text" id="search-box"  onfocus="show_result()" />
+    <div class="add-user" id="results"> </div>
+    
+</div>
 <h3>Учасники</h3>
 <div class="group-user-list">
 @foreach (VDolgah.user user in Model.users)
@@ -32,3 +42,4 @@
     </div>
 }
 </div>
+

@@ -143,5 +143,11 @@ namespace VDolgah.Controllers
                 return View(obj);
             }         
         }
+
+        public ActionResult Search(string query)
+        {
+            List<user> users = db.users.SqlQuery("SELECT * from users where MATCH (login, first_name, last_name) against('" + query +"*' in boolean mode);").ToList() ;
+            return PartialView(users);
+        }
     }
 }

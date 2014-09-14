@@ -29,7 +29,7 @@ namespace VDolgah.Controllers
                     checker.db.SaveChanges();
                     Session.Clear();
                     Session["user"] = user;
-                    Session.Timeout = 1;
+                    Session.Timeout = 10000;
                     return RedirectToAction("Login", "Account");
                 }
             }

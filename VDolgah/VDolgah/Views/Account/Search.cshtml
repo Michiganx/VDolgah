@@ -1,0 +1,10 @@
+﻿@model List<VDolgah.user>
+<table>
+    @foreach (VDolgah.user u in Model)
+    {
+        <tr class="search-elem" id="@u.id">
+            <td>@u.first_name</td>
+            <td>@u.last_name</td>
+        </tr>
+    }
+</table>
