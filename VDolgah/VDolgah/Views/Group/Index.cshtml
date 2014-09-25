@@ -24,22 +24,30 @@
     
 </div>
 <h3>Учасники</h3>
-<div class="group-user-list">
+<table class="group-user-list">
 @foreach (VDolgah.user user in Model.users)
 {
     VDolgah.debt debt = null;
+    string color = "";
     int value = 0;
     if((debt = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
     {
         value = (int) debt.value;
+        color = "green";
     }
-    else 
+    else if ((debt = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
+    {
+        value = -(int)debt.value;
+        color = "red";
+    }
+    else
     {
         value = 0;   
     }
-    <div class="elem">
-        @(user.first_name + " " + user.last_name + " debt: " +  value.ToString())
-    </div>
+    <tr class="elem">
+        <td> @(user.first_name + " " + user.last_name)</td>
+        <td style="color:@color"> @value </td>
+    </tr>
 }
-</div>
+</table>
 
