@@ -50,3 +50,33 @@ var triger = function () {
     }
 }
 
+var change_style = function (elem, value) {
+    if (value > 0) {
+        elem.color = "green";
+    }
+    else if (value < 0) {
+        elem.color = "red";
+    }
+}
+
+var handleAddDebt = function () {
+    event.preventDefault();
+    var list = [];
+    $(".check").each(function(ind, elem) {
+        if (elem.checked) {
+            list.push({ id: elem.id });
+        }
+    });
+    var result = "{array :" + JSON.stringify(list)+ "}"
+    if ($("#count").length == 0) {
+        var input = $("<input>")
+                .attr("id", "count")
+               .attr("type", "hidden")
+               .attr("name", "count").val(result);
+        $('#form1').append($(input));
+    }
+    else
+        $("#count").val(result);
+    if(parseInt($("#summ").val()) > 0) //todo eval
+        $("#form1").submit();
+}

@@ -17,12 +17,15 @@
         <input type="submit" value="Изменить" />
     }
 </div>
+@if(Model.creator == (Session["user"] as VDolgah.user).id)
+{
 <div class="add-user">
     <h3> Добавить пользователя</h3>
     <input type="text" id="search-box"  onfocus="show_result()" />
     <div class="add-user" id="results"> </div>
     
 </div>
+}
 <h3>Учасники</h3>
 <table class="group-user-list">
 @foreach (VDolgah.user user in Model.users)
@@ -42,12 +45,26 @@
     }
     else
     {
-        value = 0;   
+        value = 0;
+        color = "black";  
     }
     <tr class="elem">
         <td> @(user.first_name + " " + user.last_name)</td>
         <td style="color:@color"> @value </td>
+        <td> <input class="check" id="@user.id" type="checkbox"/> 
+        </td>
     </tr>
 }
 </table>
+<div class="add-debt">
+    @using (Html.BeginForm("AddDebt", "Group", FormMethod.Post, new { id = "form1" }))
+    {
+        @Html.TextBox("summ", "0", new { id = "summ"});
+        @Html.Hidden("group_id", Model.idgroups);
+        <input type="submit" onclick="handleAddDebt()" value="Добавить"/>
+    }
+</div>
+<div class="alg">
+    @Html.ActionLink("Свести долги", "Minimize", new { group_id = Model.idgroups }, new { @class = "button" })
+</div>
 

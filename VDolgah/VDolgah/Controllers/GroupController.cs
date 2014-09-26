@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +8,8 @@ using VDolgah.Models;
 
 namespace VDolgah.Controllers
 {
+    
+
     public class GroupController : Controller
     {
         DbEntities db = DbEntities.Instance;
@@ -48,6 +51,58 @@ namespace VDolgah.Controllers
             var user = db.users.Where((x) => x.id == user_id).First();
             group.users.Add(user);
             db.SaveChanges();
+            return RedirectToAction("Index", new { group_id = group_id });
+        }
+      
+        [JsonObject]
+        class result
+        {
+            [JsonObject]
+            public class id_
+            {
+                [JsonProperty("id")]
+                public int id;
+            }
+
+            [JsonProperty("array")]
+            public id_[] array;
+        }
+
+        [HttpPost]
+        public ActionResult AddDebt(int summ, int group_id, string count)
+        {
+            var t = JsonConvert.DeserializeObject<result>(count);
+            var div = t.array.Count();
+            Decimal debt = summ / div;
+            foreach (var id in t.array)
+            {
+                var user = db.users.Where((x) => x.id == id.id).First();
+                VDolgah.debt first = null;
+                if ((first = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null )
+                    first.value += debt;
+                else if ((first = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
+                {
+                    first.value -= debt;
+                    if (first.value == 0)
+                        db.debts.Remove(first);
+                }
+                else if (id.id != (Session["user"] as VDolgah.user).id)
+                {
+                    var d = new debt();
+                    d.row = id.id;
+                    d.column = (Session["user"] as VDolgah.user).id;
+                    d.value = debt;
+                    db.debts.Add(d);
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index", new { group_id = group_id });
+        }
+
+        public ActionResult Minimize(int group_id)
+        {
+            VDolgah.Models.Minimizer min = new Minimizer();
+            min.MinGroup(group_id);
             return RedirectToAction("Index", new { group_id = group_id });
         }
     }
