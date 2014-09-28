@@ -105,5 +105,17 @@ namespace VDolgah.Controllers
             min.MinGroup(group_id);
             return RedirectToAction("Index", new { group_id = group_id });
         }
+
+        public ActionResult ChangeDebt(decimal change_value, int row, int column, int group_id)
+        {
+            var debt = db.debts.Where((x) => x.row == row && x.column == column).FirstOrDefault();
+            if (debt != null)
+                if (debt.value - change_value <= 0)
+                    db.debts.Remove(debt);
+                else
+                    debt.value -= change_value;
+            db.SaveChanges();
+            return RedirectToAction("Index", new { group_id = group_id });
+        }
     }
 }
