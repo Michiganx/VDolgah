@@ -96,6 +96,7 @@ namespace VDolgah.Controllers
                     d.value = debt;
                     db.debts.Add(d);
                 }
+                db.Entry(user).State = System.Data.EntityState.Modified;
             }
             db.SaveChanges();
             return RedirectToAction("Index", new { group_id = group_id });
@@ -105,6 +106,7 @@ namespace VDolgah.Controllers
         {
             VDolgah.Models.Minimizer min = new Minimizer();
             min.MinGroup(group_id);
+            db.Entry(db.groups.Where((x) => x.idgroups == group_id)).State = System.Data.EntityState.Modified;
             return RedirectToAction("Index", new { group_id = group_id });
         }
 
