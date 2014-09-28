@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Linq;
 using VDolgah.Models;
+using System;
 
 namespace VDolgah.Controllers
 {
@@ -85,11 +86,6 @@ namespace VDolgah.Controllers
             user oldData = db.users.Where((x) => x.id == user.id).First();
             oldData.first_name = user.first_name;
             oldData.last_name = user.last_name;
-            if (db.users.Where((x) => x.login == user.login).ToList().Count > 0)
-            {
-                ViewBag.Error = "Пользователь с таким логином уже существует";
-                return View(user);
-            }
             oldData.login = user.login;
             oldData.email = user.email;
             db.SaveChanges();
@@ -106,42 +102,50 @@ namespace VDolgah.Controllers
         [HttpPost]
         public ActionResult ChangePassword(PasswordChanger obj)
         {
-            user user = db.users.Where((x) => x.id == obj.userId).First();
-            string dbHash = user.password_hash;
-            user.password_hash = obj.oldPass;
-            AccountChecker check = new AccountChecker(user);
-            if (dbHash.Equals(check.CreateMD5Hash()))
+            try
             {
-                if (obj.NewPass.Equals(obj.confirm))
+                user user = db.users.Where((x) => x.id == obj.userId).First();
+                string dbHash = user.password_hash;
+                user.password_hash = obj.oldPass;
+                AccountChecker check = new AccountChecker(user);
+                if (dbHash.Equals(check.CreateMD5Hash()))
                 {
-                    user.password_hash = obj.NewPass;
-                    check = new AccountChecker(user);
-                    if (dbHash.Equals(check.CreateMD5Hash()))
+                    if (obj.NewPass.Equals(obj.confirm))
                     {
-                        ViewBag.Error = "Cтарый и новый пароль совпадают";
-                        return View(obj);
+                        user.password_hash = obj.NewPass;
+                        check = new AccountChecker(user);
+                        if (dbHash.Equals(check.CreateMD5Hash()))
+                        {
+                            ViewBag.Error = "Cтарый и новый пароль совпадают";
+                            return View(obj);
+                        }
+                        else
+                        {
+                            user.salt = check.GenerateSalt();
+                            check = new AccountChecker(user);
+                            user.password_hash = check.CreateMD5Hash();
+                            db.SaveChanges();
+                            ViewBag.Error = "Пароль изменен";
+                            return View(obj);
+                        }
                     }
                     else
                     {
-                        user.salt = check.GenerateSalt();
-                        check = new AccountChecker(user);
-                        user.password_hash = check.CreateMD5Hash();
-                        db.SaveChanges();
-                        ViewBag.Error = "Пароль изменен";
+                        ViewBag.Error = "Новый пароль и подтверждение не совпадают";
                         return View(obj);
                     }
                 }
                 else
                 {
-                    ViewBag.Error = "Новый пароль и подтверждение не совпадают";
+                    ViewBag.Error = "Cтарые пароли не совпадают";
                     return View(obj);
                 }
             }
-            else
+            catch (Exception)
             {
-                ViewBag.Error = "Cтарые пароли не совпадают";
+                ViewBag.Error = "Случилась ошибка при обработке запроса";
                 return View(obj);
-            }         
+            }
         }
 
         public ActionResult Search(string query)

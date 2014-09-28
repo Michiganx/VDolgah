@@ -67,16 +67,18 @@ var handleAddDebt = function () {
             list.push({ id: elem.id });
         }
     });
-    var result = "{array :" + JSON.stringify(list)+ "}"
+    var res = 0.0;
+    if (list.length > 0) {
+    var result = "{array :" + JSON.stringify(list) + "}"
     if ($("#count").length == 0) {
         var input = $("<input>")
                 .attr("id", "count")
-               .attr("type", "hidden")
-               .attr("name", "count").val(result);
+                .attr("type", "hidden")
+                .attr("name", "count").val(result);
         $('#form1').append($(input));
     }
     else
-        $("#count").val(result);
-    if(parseInt($("#summ").val()) > 0) //todo eval
-        $("#form1").submit();
+        $("#count").val(result);     
+    $("#form1").submit();      
+    }
 }

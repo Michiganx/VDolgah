@@ -3,9 +3,10 @@
     ViewBag.Title = "Index";
     VDolgah.DbEntities db = VDolgah.DbEntities.Instance;
 }
+@Styles.Render("~/Content/css")
 <script> var gr_id = @Model.idgroups </script>
 <script src="@Url.Content("/Scripts/jquery-1.8.2.min.js")">  </script>
-<script src="@Url.Content("/Scripts/group_controller.js")">   
+<script src="@Url.Content("/Scripts/group_controller.js")">  
 </script>
 <h2>Группа: @Model.name</h2>
 <a id="triger" onclick="triger()">Изменить имя</a>
@@ -32,15 +33,15 @@
 {
     VDolgah.debt debt = null;
     string color = "";
-    int value = 0;
+    decimal value = 0;
     if((debt = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
     {
-        value = (int) debt.value;
+        value =  debt.value.Value;
         color = "green";
     }
     else if ((debt = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
     {
-        value = -(int)debt.value;
+        value = -debt.value.Value;
         color = "red";
     }
     else
@@ -50,16 +51,28 @@
     }
     <tr class="elem">
         <td> @(user.first_name + " " + user.last_name)</td>
-        <td style="color:@color"> @value </td>
-        <td> <input class="check" id="@user.id" type="checkbox"/> 
-        </td>
+        <td style="color:@color" id="val"> @value.ToString("G4") </td>
+        <td> <input class="check" id="@user.id" type="checkbox"/> </td>
+        @if(value > 0)
+        {
+            <td> <div class="changer"> 
+                    <form id="id-@user.id" action="@Url.Action("ChangeDebt")">   
+                        <input type="hidden" name="group_id" value="@Model.idgroups"/>              
+                        <input type="hidden" name="row" value="@debt.row"/>
+                        <input type="hidden" name="column" value="@debt.column"/>
+                        <input type="text" name="change_value" value="@value.ToString("G4")" style="width:50px; height:20px; float:left"/>
+                        <input type="submit" value="" id="change-debt"  />
+                    </form>
+                 </div> 
+            </td>
+        }
     </tr>
 }
 </table>
 <div class="add-debt">
     @using (Html.BeginForm("AddDebt", "Group", FormMethod.Post, new { id = "form1" }))
     {
-        @Html.TextBox("summ", "0", new { id = "summ"});
+        @Html.TextBox("summ", "0.0", new { id = "summ"});
         @Html.Hidden("group_id", Model.idgroups);
         <input type="submit" onclick="handleAddDebt()" value="Добавить"/>
     }

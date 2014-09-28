@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using VDolgah.Models;
 
 namespace VDolgah.Controllers
@@ -61,19 +62,20 @@ namespace VDolgah.Controllers
             public class id_
             {
                 [JsonProperty("id")]
-                public int id;
+                public int id = 0;
             }
 
             [JsonProperty("array")]
-            public id_[] array;
+            public id_[] array = null;
         }
 
         [HttpPost]
-        public ActionResult AddDebt(int summ, int group_id, string count)
+        public ActionResult AddDebt(string summ,  int group_id, string count)
         {
             var t = JsonConvert.DeserializeObject<result>(count);
             var div = t.array.Count();
-            Decimal debt = summ / div;
+            var Sum = Convert.ToDecimal(summ.Replace('.',','));
+            Decimal debt = Sum / div;
             foreach (var id in t.array)
             {
                 var user = db.users.Where((x) => x.id == id.id).First();

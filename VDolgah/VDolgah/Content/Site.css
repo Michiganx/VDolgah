@@ -427,6 +427,11 @@ textarea {
     color: #e80c4d;
 }
 
+
+.group-user-list {
+    border-style: solid;
+}
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #e80c4d;
@@ -455,6 +460,18 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+input#change-debt {
+     float:left; 
+     vertical-align:central;
+     padding-left:10px;
+     margin-top: 2.5px;
+     margin-left:10px;
+      padding-top:10px;
+       background-image:url(http://cdns2.freepik.com/free-photo/red-x-cross-wrong-not-clip-art_428380.jpg);
+       background-size:contain;
+       width:35px; 
+       height:35px;
+}
 
 /* tables
 ----------------------------------------------------------*/
@@ -516,6 +533,7 @@ td {
 tr.pager, td {
     padding:inherit 4px 4px 4px 4px;
 }
+
 
 .add-user {
     width : 40%; 

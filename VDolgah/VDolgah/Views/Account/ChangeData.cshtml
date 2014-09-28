@@ -14,14 +14,7 @@
         <legend>user</legend>
 
         @Html.HiddenFor(model => model.id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.email)
-            @Html.ValidationMessageFor(model => model.email)
-        </div>
+        @Html.HiddenFor(model => model.email)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.login)
