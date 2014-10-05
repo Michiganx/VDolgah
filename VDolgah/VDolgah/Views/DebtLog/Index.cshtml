@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     var db = VDolgah.DbEntities.Instance;
 }
-@if(Model != null)
+@if(Model != null && Model.Count != 0)
 {
     <table>
         <tr>
@@ -32,3 +32,8 @@
     }
     </table>
 }
+else
+{
+    <p> Здесь пока нету истории долгов </p>    
+}
+
