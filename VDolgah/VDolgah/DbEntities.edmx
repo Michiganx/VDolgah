@@ -12,42 +12,6 @@
           <EntitySet Name="groups_has_users" EntityType="Хранилище DbModel.groups_has_users" store:Type="Tables" Schema="sql543662" />
           <EntitySet Name="users" EntityType="Хранилище DbModel.users" store:Type="Tables" Schema="sql543662" />
           <EntitySet Name="users_has_debt_log" EntityType="Хранилище DbModel.users_has_debt_log" store:Type="Tables" Schema="sql543662" />
-          <AssociationSet Name="column" Association="Хранилище DbModel.column">
-            <End Role="users" EntitySet="users" />
-            <End Role="debt" EntitySet="debt" />
-          </AssociationSet>
-          <AssociationSet Name="fk_debt_log_groups1" Association="Хранилище DbModel.fk_debt_log_groups1">
-            <End Role="groups" EntitySet="groups" />
-            <End Role="debt_log" EntitySet="debt_log" />
-          </AssociationSet>
-          <AssociationSet Name="fk_debt_log_users1" Association="Хранилище DbModel.fk_debt_log_users1">
-            <End Role="users" EntitySet="users" />
-            <End Role="debt_log" EntitySet="debt_log" />
-          </AssociationSet>
-          <AssociationSet Name="fk_groups_has_users_groups1" Association="Хранилище DbModel.fk_groups_has_users_groups1">
-            <End Role="groups" EntitySet="groups" />
-            <End Role="groups_has_users" EntitySet="groups_has_users" />
-          </AssociationSet>
-          <AssociationSet Name="fk_groups_has_users_users1" Association="Хранилище DbModel.fk_groups_has_users_users1">
-            <End Role="users" EntitySet="users" />
-            <End Role="groups_has_users" EntitySet="groups_has_users" />
-          </AssociationSet>
-          <AssociationSet Name="fk_groups_users1" Association="Хранилище DbModel.fk_groups_users1">
-            <End Role="users" EntitySet="users" />
-            <End Role="groups" EntitySet="groups" />
-          </AssociationSet>
-          <AssociationSet Name="fk_users_has_debt_log_debt_log1" Association="Хранилище DbModel.fk_users_has_debt_log_debt_log1">
-            <End Role="debt_log" EntitySet="debt_log" />
-            <End Role="users_has_debt_log" EntitySet="users_has_debt_log" />
-          </AssociationSet>
-          <AssociationSet Name="fk_users_has_debt_log_users1" Association="Хранилище DbModel.fk_users_has_debt_log_users1">
-            <End Role="users" EntitySet="users" />
-            <End Role="users_has_debt_log" EntitySet="users_has_debt_log" />
-          </AssociationSet>
-          <AssociationSet Name="row" Association="Хранилище DbModel.row">
-            <End Role="users" EntitySet="users" />
-            <End Role="debt" EntitySet="debt" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="debt">
           <Key>
@@ -56,7 +20,7 @@
           </Key>
           <Property Name="row" Type="int" Nullable="false" />
           <Property Name="column" Type="int" Nullable="false" />
-          <Property Name="value" Type="decimal" />
+          <Property Name="value" Type="decimal" Scale="4" />
         </EntityType>
         <EntityType Name="debt_log">
           <Key>
@@ -68,6 +32,7 @@
           <Property Name="payer" Type="int" Nullable="false" />
           <Property Name="value" Type="decimal" Nullable="false" />
           <Property Name="comment" Type="text" Nullable="false" />
+          <Property Name="debtor" Type="int" />
         </EntityType>
         <EntityType Name="groups">
           <Key>
@@ -106,114 +71,6 @@
           <Property Name="users_id" Type="int" Nullable="false" />
           <Property Name="debt_log_iddebt_log" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="column">
-          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
-          <End Role="debt" Type="Хранилище DbModel.debt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="debt">
-              <PropertyRef Name="column" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_debt_log_groups1">
-          <End Role="groups" Type="Хранилище DbModel.groups" Multiplicity="1" />
-          <End Role="debt_log" Type="Хранилище DbModel.debt_log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="groups">
-              <PropertyRef Name="idgroups" />
-            </Principal>
-            <Dependent Role="debt_log">
-              <PropertyRef Name="groups_idgroups" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_debt_log_users1">
-          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
-          <End Role="debt_log" Type="Хранилище DbModel.debt_log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="debt_log">
-              <PropertyRef Name="payer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_groups_has_users_groups1">
-          <End Role="groups" Type="Хранилище DbModel.groups" Multiplicity="1" />
-          <End Role="groups_has_users" Type="Хранилище DbModel.groups_has_users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="groups">
-              <PropertyRef Name="idgroups" />
-            </Principal>
-            <Dependent Role="groups_has_users">
-              <PropertyRef Name="groups_idgroups" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_groups_has_users_users1">
-          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
-          <End Role="groups_has_users" Type="Хранилище DbModel.groups_has_users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="groups_has_users">
-              <PropertyRef Name="users_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_groups_users1">
-          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
-          <End Role="groups" Type="Хранилище DbModel.groups" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="groups">
-              <PropertyRef Name="creator" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_users_has_debt_log_debt_log1">
-          <End Role="debt_log" Type="Хранилище DbModel.debt_log" Multiplicity="1" />
-          <End Role="users_has_debt_log" Type="Хранилище DbModel.users_has_debt_log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="debt_log">
-              <PropertyRef Name="iddebt_log" />
-            </Principal>
-            <Dependent Role="users_has_debt_log">
-              <PropertyRef Name="debt_log_iddebt_log" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_users_has_debt_log_users1">
-          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
-          <End Role="users_has_debt_log" Type="Хранилище DbModel.users_has_debt_log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="users_has_debt_log">
-              <PropertyRef Name="users_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="row">
-          <End Role="users" Type="Хранилище DbModel.users" Multiplicity="1" />
-          <End Role="debt" Type="Хранилище DbModel.debt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="debt">
-              <PropertyRef Name="row" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -276,6 +133,7 @@
           <NavigationProperty Name="group" Relationship="DbModel.fk_debt_log_groups1" FromRole="debt_log" ToRole="groups" />
           <NavigationProperty Name="user" Relationship="DbModel.fk_debt_log_users1" FromRole="debt_log" ToRole="users" />
           <NavigationProperty Name="users" Relationship="DbModel.users_has_debt_log" FromRole="debt_log" ToRole="users" />
+          <Property Type="Int32" Name="debtor" />
         </EntityType>
         <EntityType Name="group">
           <Key>
@@ -393,6 +251,7 @@
           <EntitySetMapping Name="debt_log">
             <EntityTypeMapping TypeName="DbModel.debt_log">
               <MappingFragment StoreEntitySet="debt_log">
+                <ScalarProperty Name="debtor" ColumnName="debtor" />
                 <ScalarProperty Name="iddebt_log" ColumnName="iddebt_log" />
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="groups_idgroups" ColumnName="groups_idgroups" />

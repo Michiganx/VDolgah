@@ -1,0 +1,34 @@
+﻿@model List<VDolgah.debt_log>
+@{
+    ViewBag.Title = "Index";
+    var db = VDolgah.DbEntities.Instance;
+}
+@if(Model != null)
+{
+    <table>
+        <tr>
+        <th>Плательщик</th><th>Дата</th><th>Сумма</th><th>Комментарий</th>
+        </tr>
+    @foreach (var log in Model)
+    {
+        <tr>
+            <td>
+                @{var user = db.users.Where((x) => x.id == log.payer).FirstOrDefault();}
+                @if (user != null)
+                {
+                    <label> @user.first_name  @user.last_name </label>
+                }
+            </td>
+            <td>
+                @log.time.ToString()
+            </td>
+            <td>
+                @log.value
+            </td>
+            <td>
+                @log.comment
+            </td>
+        </tr>
+    }
+    </table>
+}

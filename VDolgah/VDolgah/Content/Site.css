@@ -539,6 +539,16 @@ tr.pager, td {
     width : 40%; 
 }
 
+#form1
+#comment {
+    display:table-row-group;
+}
+
+#form1
+#summ {
+    display:table-header-group;
+}
+
 #search-box {
     width : 80%;
 }

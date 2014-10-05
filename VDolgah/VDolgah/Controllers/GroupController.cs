@@ -70,23 +70,27 @@ namespace VDolgah.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddDebt(string summ,  int group_id, string count)
-        {
+        public ActionResult AddDebt(string summ,  int group_id, string count, string comment)
+        {           
             var t = JsonConvert.DeserializeObject<result>(count);
             var div = t.array.Count();
             var Sum = Convert.ToDecimal(summ.Replace('.',','));
-            Decimal debt = Sum / div;
+            Decimal debt = Sum / div;           
             foreach (var id in t.array)
             {
                 var user = db.users.Where((x) => x.id == id.id).First();
                 VDolgah.debt first = null;
-                if ((first = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null )
+                if ((first = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
+                {
                     first.value += debt;
+                    addLog(debt, group_id, comment, user.id);
+                }
                 else if ((first = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
                 {
                     first.value -= debt;
                     if (first.value == 0)
                         db.debts.Remove(first);
+                    addLog(debt, group_id, comment, user.id);
                 }
                 else if (id.id != (Session["user"] as VDolgah.user).id)
                 {
@@ -95,10 +99,23 @@ namespace VDolgah.Controllers
                     d.column = (Session["user"] as VDolgah.user).id;
                     d.value = debt;
                     db.debts.Add(d);
-                }
+                    addLog(debt, group_id, comment, user.id);
+                }                       
             }
             db.SaveChanges();
             return RedirectToAction("Index", new { group_id = group_id });
+        }
+
+        private void addLog(decimal debt, int group_id, string comment, int user )
+        {
+            debt_log log = new debt_log();
+            log.time = DateTime.Now;
+            log.user = Session["user"] as user;
+            log.value = debt;
+            log.groups_idgroups = group_id;
+            log.comment = comment;
+            log.debtor = user;
+            db.debt_log.Add(log); 
         }
 
         public ActionResult Minimize(int group_id)
@@ -116,6 +133,7 @@ namespace VDolgah.Controllers
                     db.debts.Remove(debt);
                 else
                     debt.value -= change_value;
+            addLog(-change_value, group_id, "Вернул долг", row);
             db.SaveChanges();
             return RedirectToAction("Index", new { group_id = group_id });
         }

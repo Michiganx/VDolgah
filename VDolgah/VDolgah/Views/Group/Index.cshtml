@@ -50,7 +50,7 @@
         color = "black";  
     }
     <tr class="elem">
-        <td> @(user.first_name + " " + user.last_name)</td>
+        <td  onclick="location.href = '@Url.Action("Index", "DebtLog", new{ group_id = Model.idgroups, user_id = user.id })'"> @(user.first_name + " " + user.last_name)</td>
         <td style="color:@color" id="val"> @value.ToString("G4") </td>
         <td> <input class="check" id="@user.id" type="checkbox"/> </td>
         @if(value > 0)
@@ -72,8 +72,11 @@
 <div class="add-debt">
     @using (Html.BeginForm("AddDebt", "Group", FormMethod.Post, new { id = "form1" }))
     {
-        @Html.TextBox("summ", "0.0", new { id = "summ"});
-        @Html.Hidden("group_id", Model.idgroups);
+        @Html.TextBox("summ", "0.0", new { id = "summ"})
+        <br /> 
+        @Html.Hidden("group_id", Model.idgroups)
+        <p>Коментарий:</p> @Html.TextArea("comment", new{ id = "comment" })
+        <br /> 
         <input type="submit" onclick="handleAddDebt()" value="Добавить"/>
     }
 </div>

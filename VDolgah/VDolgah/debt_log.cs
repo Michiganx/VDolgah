@@ -25,6 +25,7 @@ namespace VDolgah
         public int payer { get; set; }
         public decimal value { get; set; }
         public string comment { get; set; }
+        public Nullable<int> debtor { get; set; }
     
         public virtual group group { get; set; }
         public virtual user user { get; set; }
