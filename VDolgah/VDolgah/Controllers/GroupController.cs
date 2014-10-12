@@ -90,7 +90,18 @@ namespace VDolgah.Controllers
                     first.value -= debt;
                     if (first.value == 0)
                         db.debts.Remove(first);
-                    addLog(debt, group_id, comment, user.id);
+                    if (first.value < 0)
+                    {
+                        debt tmp = new VDolgah.debt();
+                        tmp.row = first.column;
+                        tmp.column = first.row;
+                        tmp.value = - first.value;
+                        db.debts.Add(tmp);
+                        addLog(debt, group_id, comment, tmp.row);
+                        db.debts.Remove(first);
+                    }
+                    else
+                        addLog(debt, group_id, comment, user.id);
                 }
                 else if (id.id != (Session["user"] as VDolgah.user).id)
                 {
