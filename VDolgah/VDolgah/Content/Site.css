@@ -348,6 +348,36 @@ div.create-group {
     padding: 20px 20px 20px 20px;
 }
 
+div.users-count {
+    float:right;
+}
+
+table.group-list {
+    padding-right: 60%;
+}
+td.gr-row-elem1 {
+    padding: 10px 150px 10px 10px
+}
+
+td.gr-row-elem2 {
+    padding: 10px 10px 10px 40px;
+    background-image: url(http://perukar.org/public/style_images/tctc91_glare/profile/default_large.png);
+    background-position:5px 5px;
+    background-repeat:no-repeat;
+    background-size: 30px 30px;
+}
+tr.group-elem:hover {
+    background-color: lightgray;
+    cursor:pointer;
+}
+tr.group-elem {
+    padding: 5px 0px 5px 20px;
+    border-style:solid;
+    border-width: 1px;
+}
+
+
+
 div.partial-login {
     padding-left: 70px;
     padding-bottom: 30px;
@@ -427,11 +457,6 @@ textarea {
     color: #e80c4d;
 }
 
-
-.group-user-list {
-    border-style: solid;
-}
-
 /* styles for validation helpers */
 .field-validation-error {
     color: #e80c4d;
@@ -479,7 +504,24 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     margin-top: 0.75em;
-    border: 0 none;
+}
+
+td.elem-td {
+    border-style:solid;
+    border-radius : 0.5px;
+    padding-left : 10px;
+    padding-bottom : 5px;
+    padding-top : 5px;
+}
+
+
+tr.elem:hover {
+    background-color: lightgray;
+}
+
+span.user-name:hover {
+    text-decoration: underline;
+    cursor:pointer;
 }
 
 th {
