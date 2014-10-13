@@ -24,14 +24,15 @@
     </div>
     if (ViewBag.GroupList != null)
     {
-        <div class="group-list">
+        <table class="group-list">
             @foreach(VDolgah.Models.GroupWrapper group in ViewBag.GroupList)
             {
-                <div class="group-elem" onclick="location.href = '@(Url.Action("Index", "Group", new { group_id = group.Group.idgroups }))'">
-                    <p>@group.Group.name</p>
-                </div>
+                <tr class="group-elem" onclick="location.href = '@(Url.Action("Index", "Group", new { group_id = group.Group.idgroups }))'">
+                    <td class="gr-row-elem1">@group.Group.name</td>
+                    <td class="gr-row-elem2 users-count"> <span style="float:right">@group.Group.users.Count </span></td>
+                </tr>
             }
-        </div>
+        </table>
     }
 }
 else

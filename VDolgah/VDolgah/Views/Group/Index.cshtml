@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     VDolgah.DbEntities db = VDolgah.DbEntities.Instance;
+    decimal debt_sum = 0.0M;
 }
 @Styles.Render("~/Content/css")
 <script> var gr_id = @Model.idgroups </script>
@@ -20,6 +21,7 @@
 </div>
 @if(Model.creator == (Session["user"] as VDolgah.user).id)
 {
+    
 <div class="add-user">
     <h3> Добавить пользователя</h3>
     <input type="text" id="search-box"  onfocus="show_result()" />
@@ -38,11 +40,13 @@
     {
         value =  debt.value.Value;
         color = "green";
+        debt_sum += value;
     }
     else if ((debt = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
     {
         value = -debt.value.Value;
         color = "red";
+        debt_sum += value;
     }
     else
     {
@@ -50,12 +54,12 @@
         color = "black";  
     }
     <tr class="elem">
-        <td  onclick="location.href = '@Url.Action("Index", "DebtLog", new{ group_id = Model.idgroups, user_id = user.id })'"> @(user.first_name + " " + user.last_name)</td>
-        <td style="color:@color" id="val"> @value.ToString("G4") </td>
-        <td> <input class="check" id="@user.id" type="checkbox"/> </td>
+        <td class="elem-td"><span class="user-name" onclick="location.href = '@Url.Action("Index", "DebtLog", new{ group_id = Model.idgroups, user_id = user.id })'"> @(user.first_name + " " + user.last_name)<span/></td>
+        <td class="elem-td" style="color:@color" id="val"> @value.ToString("G4") </td>
+        <td class="elem-td"> <input class="check" id="@user.id" type="checkbox"/> </td>
         @if(value > 0)
         {
-            <td> <div class="changer"> 
+            <td class="elem-td"> <div class="changer"> 
                     <form id="id-@user.id" action="@Url.Action("ChangeDebt")">   
                         <input type="hidden" name="group_id" value="@Model.idgroups"/>              
                         <input type="hidden" name="row" value="@debt.row"/>
@@ -68,7 +72,13 @@
         }
     </tr>
 }
+    <tr>
+        @{ string sum_color = (debt_sum > 0) ? "green" : "red"; }
+        <td><b>Сума ваших долгов:</b></td>
+        <td> <span style="color:@sum_color">@debt_sum</span></td>
+    </tr>
 </table>
+
 <div class="add-debt">
     @using (Html.BeginForm("AddDebt", "Group", FormMethod.Post, new { id = "form1" }))
     {
