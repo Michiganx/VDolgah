@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Ошибка";
+    var error = ViewBag.Error ?? "При обработке запроса произошла ошибка.";
 }
 
 <hgroup class="title">
     <h1 class="error">Ошибка.</h1>
-    <h2 class="error">При обработке запроса произошла ошибка.</h2>
+    <h2 class="error">@error</h2>
 </hgroup>

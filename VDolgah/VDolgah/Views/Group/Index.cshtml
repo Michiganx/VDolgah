@@ -75,7 +75,7 @@
     <tr>
         @{ string sum_color = (debt_sum > 0) ? "green" : "red"; }
         <td><b>Сума ваших долгов:</b></td>
-        <td> <span style="color:@sum_color">@debt_sum</span></td>
+        <td> <span style="color:@sum_color">@debt_sum.ToString("G4")</span></td>
     </tr>
 </table>
 

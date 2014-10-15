@@ -18,7 +18,10 @@ namespace VDolgah.Controllers
         public ActionResult Index(int? group_id)
         {
             group group = db.groups.Where((x) => x.idgroups == group_id).First();
-            return View(group);
+            if(group.users.Contains(Session["user"] as user))
+                return View(group);
+            else
+                return RedirectToAction("Index", "Error", new { error = "У вас нет доступа к этой группе" });       
         }
 
         public ActionResult Create()
