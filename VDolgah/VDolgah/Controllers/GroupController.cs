@@ -9,8 +9,6 @@ using VDolgah.Models;
 
 namespace VDolgah.Controllers
 {
-    
-
     public class GroupController : Controller
     {
         DbEntities db = DbEntities.Instance;
@@ -150,6 +148,33 @@ namespace VDolgah.Controllers
             addLog(-change_value, group_id, "Вернул долг", row);
             db.SaveChanges();
             return RedirectToAction("Index", new { group_id = group_id });
+        }
+
+        bool CheckGroupIdentity(List<user> users)
+        {
+            for (int i = 0; i < users.Count; i++)
+                for (int j = 0; j < users.Count; j++)
+                    if (users[i].debts.Where((x) => x.row == users[j].id).ToList().Count() > 0 ||
+                        users[i].debts1.Where((x) => x.column == users[j].id).ToList().Count() > 0)
+                        return false;
+            return true;
+        }
+
+        public ActionResult Delete(int group_id)
+        {
+            var group = db.groups.Where((x) => x.idgroups == group_id).First();
+            var users = group.users.ToList();
+            if (!CheckGroupIdentity(users))
+                return RedirectToAction("Index", "Error", new { error = "Вы не можете удалить эту группу так как в ней есть активные долги" });  
+            else
+            {
+                group.users.Clear();
+                var log_list  = db.debt_log.Where((x) => x.groups_idgroups == group.idgroups).ToList();
+                foreach (var log in log_list)
+                    db.debt_log.Remove(log);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

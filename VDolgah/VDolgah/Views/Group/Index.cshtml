@@ -28,6 +28,9 @@
     <div class="add-user" id="results"> </div>
     
 </div>
+<div id="delete-group">
+     @Html.ActionLink("Удалить Группу", "Delete", new { group_id = Model.idgroups }, new { @class = "button" })
+</div>
 }
 <h3>Учасники</h3>
 <table class="group-user-list">
