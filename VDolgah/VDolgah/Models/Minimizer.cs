@@ -91,11 +91,14 @@ namespace VDolgah.Models
                     foreach (var debt in debt_list)
                     {
                         int user_id = list.IndexOf(db.users.Where((x) => x.id == debt.row).First());
-                        matrix[user_id, i] = debt.value.Value;
-                        db.debts.Remove(debt);
+                        if (user_id != -1)
+                        {
+                            matrix[user_id, i] = debt.value.Value;
+                            db.debts.Remove(debt);
+                        }
                     }
                 }
-                db.SaveChanges();
+                //db.SaveChanges();
                 Res(matrix);
                 for(int i = 0; i < list.Count; i++)
                     for (int j = 0; j < list.Count; j++)
