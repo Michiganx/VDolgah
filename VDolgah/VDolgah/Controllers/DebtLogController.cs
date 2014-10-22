@@ -12,7 +12,8 @@ namespace VDolgah.Controllers
 
         public ActionResult Index(int group_id, int user_id)
         {
-            var res = db.debt_log.Where((x) => x.groups_idgroups == group_id && x.debtor == user_id).OrderBy((x) => x.time).ToList();
+            var User = Session["user"] as user;
+            var res = db.debt_log.Where((x) => x.groups_idgroups == group_id && x.debtor == user_id && x.payer == User.id).OrderBy((x) => x.time).ToList();
             return View(res);
         }
 

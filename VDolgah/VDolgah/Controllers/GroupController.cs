@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using VDolgah.Models;
+using Microsoft.JScript;
+using Microsoft.JScript.Vsa;
 
 namespace VDolgah.Controllers
 {
@@ -75,47 +77,62 @@ namespace VDolgah.Controllers
         {           
             var t = JsonConvert.DeserializeObject<result>(count);
             var div = t.array.Count();
-            var Sum = Convert.ToDecimal(summ.Replace('.',','));
-            Decimal debt = Sum / div;           
-            foreach (var id in t.array)
+            Decimal Sum = 0;
+            try
             {
-                var user = db.users.Where((x) => x.id == id.id).First();
-                VDolgah.debt first = null;
-                if ((first = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
-                {
-                    first.value += debt;
-                    addLog(debt, group_id, comment, user.id);
-                }
-                else if ((first = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
-                {
-                    first.value -= debt;
-                    if (first.value == 0)
-                        db.debts.Remove(first);
-                    if (first.value < 0)
-                    {
-                        debt tmp = new VDolgah.debt();
-                        tmp.row = first.column;
-                        tmp.column = first.row;
-                        tmp.value = - first.value;
-                        db.debts.Add(tmp);
-                        addLog(debt, group_id, comment, tmp.row);
-                        db.debts.Remove(first);
-                    }
-                    else
-                        addLog(debt, group_id, comment, user.id);
-                }
-                else if (id.id != (Session["user"] as VDolgah.user).id)
-                {
-                    var d = new debt();
-                    d.row = id.id;
-                    d.column = (Session["user"] as VDolgah.user).id;
-                    d.value = debt;
-                    db.debts.Add(d);
-                    addLog(debt, group_id, comment, user.id);
-                }                       
+                Sum = System.Convert.ToDecimal(Eval.JScriptEvaluate(summ, VsaEngine.CreateEngine()));
             }
-            db.SaveChanges();
-            return RedirectToAction("Index", new { group_id = group_id });
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Error", new { error = "Введено неверное выражение" });  
+            }
+            if (Sum > 0)
+            {
+                Decimal debt = Sum / div;
+                foreach (var id in t.array)
+                {
+                    var user = db.users.Where((x) => x.id == id.id).First();
+                    VDolgah.debt first = null;
+                    if ((first = user.debts1.Where((x) => x.column == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
+                    {
+                        first.value += debt;
+                        addLog(debt, group_id, comment, user.id);
+                    }
+                    else if ((first = user.debts.Where((x) => x.row == (Session["user"] as VDolgah.user).id).FirstOrDefault()) != null)
+                    {
+                        first.value -= debt;
+                        if (first.value == 0)
+                            db.debts.Remove(first);
+                        if (first.value < 0)
+                        {
+                            debt tmp = new VDolgah.debt();
+                            tmp.row = first.column;
+                            tmp.column = first.row;
+                            tmp.value = -first.value;
+                            db.debts.Add(tmp);
+                            addLog(debt, group_id, comment, tmp.row);
+                            db.debts.Remove(first);
+                        }
+                        else
+                            addLog(debt, group_id, comment, user.id);
+                    }
+                    else if (id.id != (Session["user"] as VDolgah.user).id)
+                    {
+                        var d = new debt();
+                        d.row = id.id;
+                        d.column = (Session["user"] as VDolgah.user).id;
+                        d.value = debt;
+                        db.debts.Add(d);
+                        addLog(debt, group_id, comment, user.id);
+                    }
+                }
+                db.SaveChanges();
+                return RedirectToAction("Index", new { group_id = group_id });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Error", new { error = "Введен долг, который равен 0 или отрицательный" });  
+            }
         }
 
         private void addLog(decimal debt, int group_id, string comment, int user )
