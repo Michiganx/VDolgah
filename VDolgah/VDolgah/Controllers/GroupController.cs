@@ -137,14 +137,17 @@ namespace VDolgah.Controllers
 
         private void addLog(decimal debt, int group_id, string comment, int user )
         {
-            debt_log log = new debt_log();
-            log.time = DateTime.Now;
-            log.user = Session["user"] as user;
-            log.value = debt;
-            log.groups_idgroups = group_id;
-            log.comment = comment;
-            log.debtor = user;
-            db.debt_log.Add(log); 
+            if (debt != 0)
+            {
+                debt_log log = new debt_log();
+                log.time = DateTime.Now;
+                log.user = Session["user"] as user;
+                log.value = debt;
+                log.groups_idgroups = group_id;
+                log.comment = comment;
+                log.debtor = user;
+                db.debt_log.Add(log);
+            }
         }
 
         public ActionResult Minimize(int group_id)
