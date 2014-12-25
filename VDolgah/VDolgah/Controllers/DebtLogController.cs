@@ -15,7 +15,9 @@ namespace VDolgah.Controllers
             var User = Session["user"] as user;
             if (user_id != User.id)
             {
-                var res = db.debt_log.Where((x) => x.groups_idgroups == group_id && (x.debtor == user_id && x.payer == User.id)).OrderByDescending((x) => x.time).ToList();
+                var res = db.debt_log.Where((x) => x.groups_idgroups == group_id && 
+                        ((x.debtor == user_id && x.payer == User.id) || (x.debtor == User.id && x.payer == user_id)))
+                        .OrderByDescending((x) => x.time).ToList();
                 return View(res);
             }
             else
