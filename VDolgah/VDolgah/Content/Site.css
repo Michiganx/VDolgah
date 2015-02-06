@@ -1,17 +1,19 @@
 ﻿html {
-    background-color: #e2e2e2;
     margin: 0;
     padding: 0;
+    color:black;
 }
 
 body {
     background-color: #fff;
-    border-top: solid 10px #000;
     color: #333;
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
+    font-size: medium;
+}
+
+.navbar {
+    margin-bottom: 0px;
 }
 
 a {
@@ -19,7 +21,6 @@ a {
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
-    text-decoration: underline;
 }
 
     a:link, a:visited,
@@ -104,19 +105,11 @@ h5, h6 {
     padding-bottom: 35px;
 }
 
-    .main-content {
-        background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
-        padding-top: 30px;
-    }
-
     .featured + .main-content {
         background: url("../Images/heroAccent.png") no-repeat;
     }
 
-header .content-wrapper {
-    padding-top: 20px; 
-}
+
 
 footer {
     clear: both;
@@ -345,7 +338,7 @@ input[type="text"],input[type="password"], textarea {
 }
 
 div.create-group {
-    padding: 20px 20px 20px 20px;
+    padding: 20px 0px 0px 0px;
 }
 
 div.users-count {
@@ -397,40 +390,7 @@ textarea {
         width: auto;
     }
 
-    input[type="submit"],
-    input[type="button"],
-    a.button,
-    button {
-	background: #d4d4d4;
-  background-image: -webkit-linear-gradient(top, #d4d4d4, #999999);
-  background-image: -moz-linear-gradient(top, #d4d4d4, #999999);
-  background-image: -ms-linear-gradient(top, #d4d4d4, #999999);
-  background-image: -o-linear-gradient(top, #d4d4d4, #999999);
-  background-image: linear-gradient(to bottom, #d4d4d4, #999999);
-  -webkit-border-radius: 3;
-  -moz-border-radius: 3;
-  border-radius: 6px;
-  font-family: Arial;
-  color: #000000;
-  font-size: 1.2em;
-  width:auto;
-  height:auto;
-  padding: 9px 20px 10px 20px;
-  text-decoration: none;
-}
-    input[type="submit"]:hover,
-    input[type="button"]:hover,
-    a.button:hover,
-    button:hover {
-	background: #a8a8a8;
-  background-image: -webkit-linear-gradient(top, #a8a8a8, #6e6e6e);
-  background-image: -moz-linear-gradient(top, #a8a8a8, #6e6e6e);
-  background-image: -ms-linear-gradient(top, #a8a8a8, #6e6e6e);
-  background-image: -o-linear-gradient(top, #a8a8a8, #6e6e6e);
-  background-image: linear-gradient(to bottom, #a8a8a8, #6e6e6e);
-  text-decoration: none;
-}
-
+ 
 /* info and errors */
 .message-info {
     border: 1px solid;
@@ -506,13 +466,6 @@ table {
     margin-top: 0.75em;
 }
 
-td.elem-td {
-    border-style:solid;
-    border-radius : 0.5px;
-    padding-left : 10px;
-    padding-bottom : 5px;
-    padding-top : 5px;
-}
 
 
 tr.elem:hover {
@@ -603,119 +556,6 @@ tr.pager, td {
     }
 
 
-/********************
-*   Mobile Styles   *
-********************/
-@media only screen and (max-width: 850px) {
-
-    /* header
-    ----------------------------------------------------------*/
-    header .float-left,
-    header .float-right {
-        float: none;
-    }
-
-    /* logo */
-    header .site-title {
-        margin: 10px;
-        text-align: center;
-    }
-
-    
-
-    /* menu */
-    nav {
-        margin-bottom: 5px;
-    }
-
-    ul#menu {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-
-        ul#menu li {
-            margin: 0;
-            padding: 0;
-        }
-
-
-    /* main layout
-    ----------------------------------------------------------*/
-    .main-content,
-    .featured + .main-content {
-        background-position: 10px 0;
-    }
-
-    .content-wrapper {
-        padding-right: 10px;
-        padding-left: 10px;
-    }
-
-    .featured .content-wrapper {
-        padding: 10px;
-    }
-
-    /* page content */
-    article, aside {
-        float: none;
-        width: 100%;
-    }
-
-    /* ordered list */
-    ol.round {
-        list-style-type: none;
-        padding-left: 0;
-    }
-
-        ol.round li {
-            padding-left: 10px;
-            margin: 25px 0;
-        }
-
-            ol.round li.zero,
-            ol.round li.one,
-            ol.round li.two,
-            ol.round li.three,
-            ol.round li.four,
-            ol.round li.five,
-            ol.round li.six,
-            ol.round li.seven,
-            ol.round li.eight,
-            ol.round li.nine {
-                background: none;
-            }
-
-     /* features */
-     section.feature {
-        float: none;
-        padding: 10px;
-        width: auto;
-     }
-
-        section.feature img {
-            color: #999;
-            content: attr(alt);
-            font-size: 1.5em;
-            font-weight: 600;
-        }
-
-
-
-    /* footer
-    ----------------------------------------------------------*/
-    footer .float-left,
-    footer .float-right {
-        float: none;
-    }
-
-    footer {
-        text-align: center;
-        height: auto;
-        padding: 10px 0;
-    }
-
-        footer p {
-            margin: 0;
-        }
+.list-group-item:hover {
+    background-color: #e2e2e2;
 }

@@ -1,9 +1,0 @@
-﻿@{
-    if (Session["user"] != null)
-    {
-        VDolgah.user u = (Session["user"] as VDolgah.user);
-        <div class ="partial-login">
-            <h1>Привет, @Server.UrlDecode(u.first_name + " " + u.last_name)</h1> 
-        </div>
-    }
-}

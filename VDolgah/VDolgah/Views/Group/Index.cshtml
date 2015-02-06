@@ -57,7 +57,7 @@
         value = 0;
         color = "black";
     }
-    <tr class="elem">
+    <tr class="list-group">
         <td class="elem-td"><span class="user-name" onclick="location.href = '@Url.Action("Index", "DebtLog", new { group_id = Model.idgroups, user_id = user.id })'"> @(user.first_name + " " + user.last_name)<span/></td>
         <td class="elem-td" style="color:@color" id="val"> @value.ToString("G4") </td>
         <td class="elem-td"> <input class="check" id="@user.id" type="checkbox"/> </td>

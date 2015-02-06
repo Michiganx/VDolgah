@@ -23,7 +23,7 @@
         </style>
     }
     <table>
-        <tr class="pager">
+        <tr>
             <td>
                 Email или логин
             </td>
@@ -31,7 +31,7 @@
                 @Html.EditorFor((x) => x.email)
             </td>
         </tr>
-        <tr class="pager">
+        <tr>
             <td>
                 Пароль
             </td>
@@ -39,12 +39,13 @@
                 @Html.PasswordFor((x) => x.password_hash)
             </td>
         </tr>
-        <tr class="pager">
-            <td>  
-            </td>
+        <tr>
+            <td></td>
             <td>
-                <input type="submit" value="Логин"/>
-                @Html.ActionLink("Регистрация", "Register", null, new { @class = "button" })
+                <div class="btn-group">
+                    <input type="submit" class="btn btn-primary" value="Логин"/>
+                    @Html.ActionLink("Регистрация", "Register", null, new { @class = "btn btn-default" })
+                </div>
             </td>
         </tr>
         @if (ViewBag.ErrorMessage != null)
