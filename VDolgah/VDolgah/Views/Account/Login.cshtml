@@ -15,19 +15,6 @@
     }
 }
 
-<div>
-    <h2>@user.first_name @user.last_name
-    @if (sessionUser)
-    {
-        <small >
-        <a class="btn btn-default btn-xs" href="/Account/ChangeData">
-            <span class="glyphicon glyphicon-pencil"></span>
-            Змінити дані
-        </a>
-        </small>
-    }
-    </h2>
-</div>
 @if (sessionUser)
 { 
     <div class ="create-group">
@@ -35,12 +22,12 @@
     </div>
     if (ViewBag.GroupList != null)
     {
-        <div class="list-group">
+        <div class="list-group group-list container">
             @foreach(VDolgah.Models.GroupWrapper group in ViewBag.GroupList)
             {
-                <div class="list-group-item" onclick="location.href = '@(Url.Action("Index", "Group", new { group_id = group.Group.idgroups }))'">
-                    <td class="gr-row-elem1">@group.Group.name</td>
-                    <td class="gr-row-elem2 users-count"> <span style="float:right">@group.Group.users.Count </span></td>
+                <div class="list-group-item row group-list-item" onclick="location.href = '@(Url.Action("Index", "Group", new { group_id = group.Group.idgroups }))'">
+                    <div class="col-xs-10">@group.Group.name</div>
+                    <div class="col-xs-2 float-right"> <span style="float:right">@group.Group.users.Count </span></div>
                 </div>
             }
         </div>

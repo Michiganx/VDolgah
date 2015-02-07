@@ -10,6 +10,7 @@ body {
     margin: 0;
     padding: 0;
     font-size: medium;
+    margin-top:50px;
 }
 
 .navbar {
@@ -555,7 +556,15 @@ tr.pager, td {
     background-color:white;
     }
 
+.group-list-item {
+    margin-left:0px;
+    margin-right:0px;
+}
 
-.list-group-item:hover {
+.group-list-item:hover {
     background-color: #e2e2e2;
+}
+
+.group-list {
+    margin-top:20px;
 }

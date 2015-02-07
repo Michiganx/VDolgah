@@ -3,7 +3,7 @@
     <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title — приложение ASP.NET MVC</title>
+        <title>@ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         <link rel="stylesheet" href="~/Content/yeti-bootstrap.min.css" />
@@ -12,7 +12,7 @@
   
     </head>
     <body>
-        <div class="navbar navbar-default container-fluid">
+        <div class="navbar navbar-default navbar-fixed-top container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand">Вдолгах</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -26,7 +26,15 @@
                     @if (Session["user"] != null)
                     {
                         VDolgah.user u = (Session["user"] as VDolgah.user);
-                        <li><a href="/Account/Login">@u.first_name  @u.last_name</a></li>    
+                        <li> 
+                            <a href="/Account/Login">@u.first_name  @u.last_name </a>                                                                 
+                        </li>
+                        <li>
+                            <a href="/Account/ChangeData">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                Сменить данные
+                            </a> 
+                        </li>    
                         <li><a href="/Account/Logout">Выйти</a></li>  
                     }        
                 </ul>
