@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище DbModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище DbModel" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="Хранилище DbModelContainer">
-          <EntitySet Name="debt" EntityType="Хранилище DbModel.debt" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="debt_log" EntityType="Хранилище DbModel.debt_log" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="groups" EntityType="Хранилище DbModel.groups" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="groups_has_users" EntityType="Хранилище DbModel.groups_has_users" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="users" EntityType="Хранилище DbModel.users" store:Type="Tables" Schema="sql543662" />
-          <EntitySet Name="users_has_debt_log" EntityType="Хранилище DbModel.users_has_debt_log" store:Type="Tables" Schema="sql543662" />
+          <EntitySet Name="debt" EntityType="Хранилище DbModel.debt" store:Type="Tables" Schema="sql543662" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="debt_log" EntityType="Хранилище DbModel.debt_log" store:Type="Tables" Schema="sql543662" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="groups" EntityType="Хранилище DbModel.groups" store:Type="Tables" Schema="sql543662" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="groups_has_users" EntityType="Хранилище DbModel.groups_has_users" store:Type="Tables" Schema="sql543662" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="users" EntityType="Хранилище DbModel.users" store:Type="Tables" Schema="sql543662" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="users_has_debt_log" EntityType="Хранилище DbModel.users_has_debt_log" store:Type="Tables" Schema="sql543662" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
         </EntityContainer>
         <EntityType Name="debt">
           <Key>
@@ -74,7 +74,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="DbEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="debts" EntityType="DbModel.debt" />
           <EntitySet Name="debt_log" EntityType="DbModel.debt_log" />
@@ -320,6 +320,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams />
   </Designer>
 </edmx:Edmx>

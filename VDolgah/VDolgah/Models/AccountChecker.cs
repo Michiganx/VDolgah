@@ -102,11 +102,6 @@ namespace VDolgah.Models
 
         public string getLastIP()
         {
-            foreach (var addr in Dns.GetHostEntry(string.Empty).AddressList)
-            {
-                if (addr.AddressFamily == AddressFamily.InterNetwork)
-                    return addr.MapToIPv4().ToString();
-            }
             return String.Empty;
         }
     }
